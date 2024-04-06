@@ -8,15 +8,16 @@ import { Colors, BorderRadiuses, View, Image, ListItem, Text, GridView, GridList
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
-import { Appearance, useColorScheme, StatusBar } from 'react-native';
+import { Appearance, useColorScheme, StatusBar, Switch, Dimensions, StyleSheet, Platform, Button } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
-import ComminSoon from './assets/coming-soon.svg'
+import Waves from './assets/svgs/waves.svg'
 import ExpoInstaStory from 'expo-insta-story';
 import CoursScreen from './screens/CoursScreen';
 import ChapterScreen from './screens/ChapterScreen';
 import LearningCard from './components/LearningCard';
 import QuizScreen from './screens/QuizScreen';
 import QcmComonent from './components/QcmComonent';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 
@@ -25,6 +26,7 @@ export default function Navigation() {
         <RootNavigator />
     </NavigationContainer>
 }
+
 
 
 const Stack = createStackNavigator()
@@ -38,7 +40,8 @@ function RootNavigator() {
             <Stack.Navigator>
                 <Stack.Group
                     screenOptions={{
-                        // headerShown: false, headerTintColor: '#fff',
+
+                        headerShown: false,
                         headerStyle: {
                             backgroundColor: colors.background,
                             shadowColor: 'transparent', // this covers iOS
@@ -50,13 +53,28 @@ function RootNavigator() {
                     }}>
 
                     <>
-                        <Stack.Screen name="Smart Cotier" component={BottomTabNavigator} />
+                        <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
                         <Stack.Screen
                             name="Items"
                             component={QuizScreen}
-                            options={{ gestureDirection: 'horizontal', gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card', keyboardHandlingEnabled: true }}
+                            options={{
+                                gestureDirection: 'horizontal',
+                                gestureEnabled: false,
+                                cardStyle: { backgroundColor: colors.background },
+                                headerShown: true,
+
+                                // header: () => headerRestoOpen(),
+                                presentation: 'card', keyboardHandlingEnabled: true
+                            }}
                         />
-                        <Stack.Screen name="ChapterScreen" component={ChapterScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: route.params.chapName, presentation: 'card', keyboardHandlingEnabled: true })} />
+                        <Stack.Screen name="ChapterScreen"
+                            component={ChapterScreen}
+                            options={({ route }) => ({
+                                cardStyle: { backgroundColor: colors.background },
+                                headerShown: true,
+                                headerTitle: route.params.chapName,
+                                presentation: 'card'
+                            })} />
                         <Stack.Screen name="LearningCard" component={LearningCard} options={{ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: "", presentation: 'card', keyboardHandlingEnabled: true }} />
                         <Stack.Screen name="QuizScreen" component={QuizScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card', keyboardHandlingEnabled: true })} />
                         <Stack.Screen name="QcmComonent" component={QcmComonent} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card', keyboardHandlingEnabled: true })} />
@@ -77,9 +95,21 @@ function BottomTabNavigator() {
 
     const tabIconColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
 
+    const headerRestoOpen = () => {
+        return (
+            <View style={{ marginTop: -150 }}>
+                < Waves style={{
+                }} width={"100%"} height={250} />
+            </View >
+
+        )
+    }
+
     return (
         <BottomTab.Navigator
             screenOptions={{
+                header: () => headerRestoOpen(),
+                headerTitle: '',
                 tabBarShowLabel: false,
                 tabBarStyle: {
                     borderTopWidth: 0,
@@ -89,11 +119,11 @@ function BottomTabNavigator() {
                 }
             }}>
             <BottomTab.Screen
-                name="CategoryScreen"
+                name="HomeTabs"
                 component={HomeHeaderTabs}
                 options={{
-                    headerShown: false,
-                    //  header: () => headerRestoOpen(),
+                    headerShown: true,
+                    headerTitle: "",
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'home' : 'home-outline'} />
                 }}
             />
@@ -102,6 +132,7 @@ function BottomTabNavigator() {
                 name="orders"
                 component={QuizScreen}
                 options={{
+                    headerTitle: "",
                     headerShown: false,
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'bell-ring' : 'bell-ring-outline'} />
                     // tabBarButton: ({ children }) => <Example />
@@ -179,4 +210,97 @@ const HomeHeaderTabs = () => {
 
 
 
+const { width } = Dimensions.get('window') // get screen width
+const { width: screenWidth } = Dimensions.get('window')
 
+const styles = StyleSheet.create({
+    item: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        maxHeight: 200
+    },
+    imageContainer: {
+        width: '100%',
+        maxWidth: 500,
+        maxHeight: 200,
+        height: '100%',
+        marginBottom: Platform.select({ ios: 0, android: 1 }), // Prevent a random Android rendering issue
+        borderRadius: 8,
+        resizeMode: 'cover', // Ajuster l'image pour couvrir tout l'élément Image
+        position: 'absolute'
+    },
+    cardContainer: {
+        maxWidth: 500,
+        maxHeight: 200,
+        padding: 20,
+        flexDirection: 'row-reverse'
+    },
+    icon: {
+        padding: 20,
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        marginVertical: 30,
+        borderRadius: 50,
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white'
+    },
+    textContainer: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'space-between', // Centrer verticalement
+        alignItems: 'flex-start' // Centrer horizontalement
+    },
+    text: {
+        textAlign: 'right',
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: 'white'
+    },
+    subtitle: {
+        fontSize: 18,
+        color: 'hsla(203, 100%, 94%, 1)'
+    },
+
+    image: {
+        ...StyleSheet.absoluteFillObject,
+        resizeMode: 'cover'
+    },
+
+    container: {
+        height: 200,
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    halfCircle: {
+        width: 50,
+        height: 50,
+        borderBottomLeftRadius: 50,
+        margin: -20,
+        borderBottomRightRadius: 50,
+        transform: [{ scaleX: width / 50 }]
+    },
+    halfCircleClosed: {
+        borderBottomLeftRadius: 50,
+        margin: 10,
+        borderBottomRightRadius: 50,
+        transform: [{ scaleX: width / 50 }]
+    },
+    thirdCircle: {
+        width: 100,
+        height: 90,
+        borderBottomLeftRadius: 90,
+        margin: -35,
+        borderBottomRightRadius: 50,
+        transform: [{ scaleX: width / 50 }]
+    },
+    forthCircle: {
+        width: 100,
+        height: 90,
+        borderBottomLeftRadius: 90,
+        margin: -75,
+        borderBottomRightRadius: 50,
+        transform: [{ scaleX: width / 50 }]
+    }
+})

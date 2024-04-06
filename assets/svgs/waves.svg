@@ -1,0 +1,17 @@
+<svg viewBox="0 0 300 10">
+    <path d="M 0 150 C 150 100 20 100 300 100 L 300 0 L 0 0" fill="#c6f8b4" opacity="0.5"></path>
+    <path d="M 0 20 C 150 150 300 50 400 100 L 300 0 L 0 0" fill="#178f31"></path>
+    <path d="M 0 100 C 150 0 330 100 400 50 L 300 0 L 0 0" fill="#72fe14" opacity="0.8"></path>
+    <!-- Boat -->
+    <g transform="translate(200,70) scale(0.4)">
+        <polygon points="93,10 100,60 150,60" fill="#FFF" style="  stroke-width:1" />
+    </g>
+
+    <g transform="translate(9,70) scale(0.3)">
+        <polygon points="93,10 100,60 150,60" fill="#FFF" style=" stroke-width:1" />
+    </g>
+
+    <g transform="translate(230, 50) scale(0.2)">
+        <polygon points="93,10 100,60 160,60" fill="#FFF" style="  stroke-width:1" />
+    </g>
+</svg>
