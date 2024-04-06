@@ -6,6 +6,20 @@ export type Lesson = {
     imgs: string[]
 }
 
+
+export type ChapterProgression = {
+    chapterId: string;
+    lessonId: string;
+    progress: Progress;
+}
+
+export enum Progress {
+    ZERO = 'ZERO',
+    IN_PROGRESS = 'IN_PROGRESS',
+    COMPLETED = 'COMPLETED',
+}
+
+
 export type Chapter = {
     id: string;
     name: string;
@@ -33,6 +47,8 @@ export type Answer = {
     text: string;
     valid: boolean
 }
+
+
 
 
 

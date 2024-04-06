@@ -12,18 +12,22 @@ import { Appearance, useColorScheme, StatusBar, Switch, Dimensions, StyleSheet, 
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Waves from './assets/svgs/waves.svg'
 import ExpoInstaStory from 'expo-insta-story';
-import CoursScreen from './screens/CoursScreen';
+import HomeScreen from './screens/HomeScreen';
 import ChapterScreen from './screens/ChapterScreen';
 import LearningCard from './components/LearningCard';
 import QuizScreen from './screens/QuizScreen';
 import QcmComonent from './components/QcmComonent';
 import { LinearGradient } from 'expo-linear-gradient';
+import ResetPasswordScreen from './screens/login-and-signup/ResetPasswordScreen';
+import SignupScreen from './screens/login-and-signup/SignupScreen';
+import EmailLoginScreen from './screens/login-and-signup/EmailLoginScreen';
+import LoginScreen from './screens/login-and-signup/LoginScreen';
 
 
 
-export default function Navigation() {
+export default function Navigation({ loggedIn }: { loggedIn: boolean; }) {
     return <NavigationContainer >
-        <RootNavigator />
+        <RootNavigator loggedIn={loggedIn} />
     </NavigationContainer>
 }
 
@@ -31,27 +35,26 @@ export default function Navigation() {
 
 const Stack = createStackNavigator()
 
-function RootNavigator() {
+function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
 
     const { colors } = useTheme()
 
     return (
-        <>
-            <Stack.Navigator>
-                <Stack.Group
-                    screenOptions={{
+        <Stack.Navigator>
+            <Stack.Group
+                screenOptions={{
 
-                        headerShown: false,
-                        headerStyle: {
-                            backgroundColor: colors.background,
-                            shadowColor: 'transparent', // this covers iOS
-                            elevation: 0 // this covers Android
-                        },
-                        headerTintColor: Colors.green10,
-                        headerShadowVisible: false,
-                        headerBackTitleVisible: false
-                    }}>
-
+                    headerShown: false,
+                    headerStyle: {
+                        backgroundColor: colors.background,
+                        shadowColor: 'transparent', // this covers iOS
+                        elevation: 0 // this covers Android
+                    },
+                    headerTintColor: Colors.green10,
+                    headerShadowVisible: false,
+                    headerBackTitleVisible: false
+                }}>
+                {loggedIn ? (
                     <>
                         <Stack.Screen name="HomeScreen" component={BottomTabNavigator} />
                         <Stack.Screen
@@ -78,12 +81,18 @@ function RootNavigator() {
                         <Stack.Screen name="LearningCard" component={LearningCard} options={{ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: "", presentation: 'card', keyboardHandlingEnabled: true }} />
                         <Stack.Screen name="QuizScreen" component={QuizScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card', keyboardHandlingEnabled: true })} />
                         <Stack.Screen name="QcmComonent" component={QcmComonent} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card', keyboardHandlingEnabled: true })} />
-
                     </>
-
-                </Stack.Group>
-            </Stack.Navigator>
-        </>
+                ) :
+                    (<>
+                        {/* <Stack.Screen name="Welcome" component={WelcomeSliderScreen} options={{ headerShown: false }} /> */}
+                        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+                        <Stack.Screen name="EmailLogin" component={EmailLoginScreen} options={{ headerTitle: `Connexion` }} />
+                        <Stack.Screen name="Signup" component={SignupScreen} options={{ title: 'Créer un compte' }} />
+                        <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ title: 'Réinitialiser votre mot de passe' }} />
+                    </>)
+                }
+            </Stack.Group>
+        </Stack.Navigator>
     )
 }
 
@@ -142,7 +151,7 @@ function BottomTabNavigator() {
 
             <BottomTab.Screen
                 name="store"
-                component={CoursScreen}
+                component={HomeScreen}
                 options={{
                     headerShown: false,
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'cog' : 'cog-outline'} />
@@ -178,7 +187,7 @@ const HomeHeaderTabs = () => {
             }}>
             <HomeHeaderTab.Screen
                 name="Lesson"
-                component={CoursScreen}
+                component={HomeScreen}
                 options={{
                     tabBarLabel: ({ color, focused }) => (
                         <View>

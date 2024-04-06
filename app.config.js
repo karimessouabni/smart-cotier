@@ -56,6 +56,13 @@ module.exports = {
             firebaseMessagingSenderId: process.env.DEV_FIREBASE_MESSAGING_SENDER_ID,
             firebaseAppId: process.env.DEV_FIREBASE_APP_ID,
             firebaseMeasurementId: process.env.DEV_FIREBASE_MEASUREMENT_ID,
+
+            usesEmailSignIn: true,
+            usesAppleSignIn: true,
+            usesGoogleSignIn:  process.env.PROD_USES_GOOGLE_SIGN_IN ,
+            googleExpoClientId: process.env.PROD_GOOGLE_EXPO_CLIENT_ID,
+            googleWebClientId: process.env.PROD_GOOGLE_WEB_CLIENT_ID ,
+
             }
     }
 }

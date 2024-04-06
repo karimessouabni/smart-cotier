@@ -3,15 +3,24 @@
     <path d="M 0 20 C 150 150 300 50 400 100 L 300 0 L 0 0" fill="#178f31"></path>
     <path d="M 0 100 C 150 0 330 100 400 50 L 300 0 L 0 0" fill="#72fe14" opacity="0.8"></path>
     <!-- Boat -->
-    <g transform="translate(200,70) scale(0.4)">
-        <polygon points="93,10 100,60 150,60" fill="#FFF" style="  stroke-width:1" />
+    <g transform="translate(130,60) scale(0.2)">
+        <!-- Hull of the boat -->
+        <path d="M 50,150 Q 100,100 150,150" fill="white" />
+        <!-- Sail -->
+        <polygon points="100,50 100,150 150,150" fill="white" />
     </g>
 
-    <g transform="translate(9,70) scale(0.3)">
-        <polygon points="93,10 100,60 150,60" fill="#FFF" style=" stroke-width:1" />
+    <g transform="translate(9,60) scale(0.12)">
+        <!-- Hull of the boat -->
+        <path d="M 50,150 Q 100,100 150,150" fill="white" />
+        <!-- Sail -->
+        <polygon points="100,50 100,150 150,150" fill="white" />
     </g>
 
-    <g transform="translate(230, 50) scale(0.2)">
-        <polygon points="93,10 100,60 160,60" fill="#FFF" style="  stroke-width:1" />
+    <g transform="translate(230,40) scale(0.25)">
+        <!-- Hull of the boat -->
+        <path d="M 50,150 Q 100,100 150,150" fill="white" />
+        <!-- Sail -->
+        <polygon points="100,50 100,150 150,150" fill="white" />
     </g>
 </svg>

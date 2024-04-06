@@ -5,5 +5,6 @@ module.exports = function(api) {
         sourceMaps: true,
 
         plugins: [ 'react-native-reanimated/plugin']
+        
   };
 };

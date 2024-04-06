@@ -1,41 +1,32 @@
 import _ from 'lodash';
-import React, { Component, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
-import { renderBooleanOption, renderSliderOption } from './ExampleScreenPresenter';
-import LearningCardService from '../services/LearningCardService';
-import { Lesson } from '../data/chapters';
-import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+import { ChapterProgression, Lesson, Progress } from '../data/chapters';
+import Markdown from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import UserService from '../services/UserService';
 
 
-const IMAGES = [
-    'https://images.pexels.com/photos/6785289/pexels-photo-6785289.jpeg?auto=compress&cs=tinysrgb&w=800',
-    'https://images.pexels.com/photos/5560909/pexels-photo-5560909.jpeg?auto=compress&cs=tinysrgb&w=800',
-    'https://images.pexels.com/photos/5416342/pexels-photo-5416342.jpeg?auto=compress&cs=tinysrgb&w=800'
-];
-const BACKGROUND_COLORS = [
-    Colors.red50,
-    Colors.yellow20,
-    Colors.purple50,
-    Colors.green50,
-    Colors.cyan50,
-    Colors.purple20,
-    Colors.blue60,
-    Colors.red10,
-    Colors.green20,
-    Colors.purple60
-];
 
 export type LearningCardProps = {
+    chapterId: string
     lesson: Lesson
 }
 
 
 export default function LearningCard({ route, navigation }: any) {
-    const { lesson }: LearningCardProps = route.params
+    const { lesson, chapterId }: LearningCardProps = route.params
     const carousel = useRef(null);
     const [firstText, setFirstText] = useState<String>("")
+
+
+    useEffect(() => {
+        const updateChapterProgression = async () => {
+            await UserService.updateChapterProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.ZERO })
+        }
+        updateChapterProgression();
+    }, [])
 
 
     useEffect(() => {
@@ -43,7 +34,7 @@ export default function LearningCard({ route, navigation }: any) {
             navigation.setOptions({
                 // headerTitle: () => <>{<Text style={{ color: Colors.black }}>{label || 'Faites votre choix'}</Text>}</>,
                 headerRight: () => (
-                    <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => finishChapter()}>
                         <MaterialCommunityIcons color={Colors.green10} size={25} name={'check-all'} />
                     </TouchableOpacity>
                 )
@@ -53,6 +44,11 @@ export default function LearningCard({ route, navigation }: any) {
         updateHeaderOptions()
     }, [navigation])
 
+
+    const finishChapter = async () => {
+        await UserService.updateChapterProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.COMPLETED })
+        navigation.goBack()
+    }
 
     const getWidth = () => {
         return Constants.windowWidth - Spacings.s5 * 2;
