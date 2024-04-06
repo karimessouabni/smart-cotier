@@ -44,7 +44,7 @@ function RootNavigator() {
                             shadowColor: 'transparent', // this covers iOS
                             elevation: 0 // this covers Android
                         },
-                        headerTintColor: "#00A975",
+                        headerTintColor: Colors.green10,
                         headerShadowVisible: false,
                         headerBackTitleVisible: false
                     }}>
@@ -75,7 +75,7 @@ const BottomTab = createBottomTabNavigator()
 function BottomTabNavigator() {
     const { colors } = useTheme()
 
-    const tabIconColor = (focused: boolean) => (focused ? "#15be53" : "#2F4858")
+    const tabIconColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
 
     return (
         <BottomTab.Navigator
@@ -128,8 +128,8 @@ const HomeHeaderTab = createMaterialTopTabNavigator()
 // for the categories, modifiers and labels
 const HomeHeaderTabs = () => {
     const { colors } = useTheme()
-    const headerTextColor = (focused: boolean) => (focused ? "#00A60A" : "#2F4858")
-    const headerIconColor = (focused: boolean) => (focused ? "#00A60A" : "#2F4858")
+    const headerTextColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
+    const headerIconColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
 
     return (
         <HomeHeaderTab.Navigator

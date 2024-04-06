@@ -80,21 +80,6 @@ export default function ChapterScreen({ route, navigation }: any) {
 }
 
 
-const getProgressColor = (progress: number) => {
-
-    switch (true) {
-        case progress >= 0 && progress <= 12:
-            return Colors.yellow40;
-        case progress >= 13 && progress <= 19:
-            return Colors.yellow20;
-        case progress >= 20 && progress <= 65:
-            return Colors.orange30;
-        case progress > 65:
-            return Colors.green20;
-        default:
-            return Colors.green1;
-    }
-}
 
 const styles = StyleSheet.create({
     image: {

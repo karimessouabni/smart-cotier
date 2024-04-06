@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { Component, useEffect, useRef, useState } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
 import { renderBooleanOption, renderSliderOption } from './ExampleScreenPresenter';
 import LearningCardService from '../services/LearningCardService';
 import { Lesson } from '../data/chapters';
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
 const IMAGES = [
@@ -32,23 +33,25 @@ export type LearningCardProps = {
 
 
 export default function LearningCard({ route, navigation }: any) {
-    const { lesson }: any = route.params
-
+    const { lesson }: LearningCardProps = route.params
     const carousel = useRef(null);
     const [firstText, setFirstText] = useState<String>("")
 
 
-    // useEffect(() => {
+    useEffect(() => {
+        const updateHeaderOptions = () => {
+            navigation.setOptions({
+                // headerTitle: () => <>{<Text style={{ color: Colors.black }}>{label || 'Faites votre choix'}</Text>}</>,
+                headerRight: () => (
+                    <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
+                        <MaterialCommunityIcons color={Colors.green10} size={25} name={'check-all'} />
+                    </TouchableOpacity>
+                )
+            })
+        }
 
-    //     const fetchChapters = async () => {
-    //         const fetchedText1 = await LearningCardService.fetchFirstText(chapterId, lessonId)
-    //         setFirstText(fetchedText1)
-    //         console.log(fetchedText1)
-
-    //     }
-    //     fetchChapters();
-
-    // }, [])
+        updateHeaderOptions()
+    }, [navigation])
 
 
     const getWidth = () => {
@@ -77,38 +80,26 @@ export default function LearningCard({ route, navigation }: any) {
 
             </Markdown>
 
-            {/* {formatStr().map((part, index) => {
-                    const isBold = index % 2 !== 0; // Every second part will be between "**", thus bold
-                    return (
-                        <Markdown>
-                            {part}
-                        </Markdown>
-                        // <Text key={index} style={isBold ? { fontWeight: 'bold' } : {}}>
-                        //     {part}
-                        // </Text>
-                    );
-                })} */}
 
-            {/* </Text> */}
             <Carousel
-                key={3}
+                key={0}
                 ref={carousel}
                 pageWidth={getWidth()}
                 itemSpacings={Spacings.s3}
-                containerStyle={{ paddingTop: 100, height: 460 }}
+                containerStyle={{ paddingTop: 20, height: 460, width: 400 }}
                 pageControlPosition={Carousel.pageControlPositions.UNDER}
 
             >
-                {_.map([...Array(3)], (_item, index) => (
-                    <Page style={{ backgroundColor: BACKGROUND_COLORS[index] }} key={index}>
+                {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
+                    <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
                         <Image
                             overlayType={Image.overlayTypes.BOTTOM}
-                            style={{ flex: 1 }}
+                            style={{ position: 'absolute', width: '100%', height: '100%' }}
                             source={{
-                                uri: IMAGES[index]
+                                uri: uri
                             }}
                         />
-                        <Text margin-15>{index}/{3}</Text>
+                        {/* <Text text80 color={Colors.green1} style={{ position: 'absolute', textAlign: 'left' }} padding-35>{index}/{3}</Text> */}
 
                     </Page>
                 ))}
@@ -128,7 +119,7 @@ export default function LearningCard({ route, navigation }: any) {
 // @ts-ignore
 const Page = ({ children, style, ...others }) => {
     return (
-        <View {...others} style={[styles.page, style]}>
+        <View {...others} style={{ flex: 1 }}>
             {children}
         </View>
     );
@@ -140,8 +131,6 @@ const styles = StyleSheet.create({
     },
     page: {
         flex: 1,
-        borderWidth: 1,
-        borderRadius: 8
     },
     loopCarousel: {
         position: 'absolute',

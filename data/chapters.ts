@@ -3,6 +3,7 @@ export type Lesson = {
     name: string;
     description: string;
     text1: string;
+    imgs: string[]
 }
 
 export type Chapter = {

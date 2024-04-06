@@ -44,7 +44,7 @@ export default function CoursScreen({ navigation: { navigate } }: any) {
                                 {row.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
-                                <MaterialIcons name="keyboard-arrow-right" size={24} color="black" />
+                                <MaterialIcons name="keyboard-arrow-right" size={24} color={Colors.green10} />
                             </View>
                         </ListItem.Part>
                         <ListItem.Part>
@@ -62,7 +62,7 @@ export default function CoursScreen({ navigation: { navigate } }: any) {
                                 backgroundColor={Colors.green80}
                                 progress={row.nbrLesson * 20}
                                 duration={1600}
-                                containerStyle={{ backgroundColor: Colors.green30, height: 2 }}
+                                containerStyle={{ backgroundColor: "#15be53", height: 2 }}
                             />
                         </View>
                     </ListItem.Part>

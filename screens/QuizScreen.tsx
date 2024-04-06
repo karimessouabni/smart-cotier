@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, View, Text, AnimatedImage } from "react-native-ui-lib";
+import { Card, View, Text, AnimatedImage, Colors } from "react-native-ui-lib";
 import { Quiz } from "../data/chapters";
 import QuizService from "../services/QuizService";
 import { ScrollView } from "react-native-gesture-handler";
@@ -32,20 +32,22 @@ export default function QuizScreen({ route, navigation }: any) {
 
 
     const renderRow = (quizTabOf2: Quiz[], index: number) =>
-        <View row margin-10>
+        <View key={index} row margin-10>
 
 
             {quizTabOf2.map((quiz, index) =>
                 <Card
+                    key={index}
                     id={quiz.id}
                     height={120}
                     flex
                     onPress={() => navigation.navigate('QcmComonent', { quiz: quiz })}
-                    activeOpacity={1}
+                    activeOpacity={9}
+                    style={{ shadowRadius: 2, shadowColor: Colors.grey10 }}
                     marginH-10
                     center
                 >
-                    <Text>exam {quiz.order}</Text>
+                    <Text text70M>🛟 Exam {quiz.order}</Text>
                 </Card>
             )}
 

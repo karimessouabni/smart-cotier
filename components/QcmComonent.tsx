@@ -12,6 +12,7 @@ export default function QcmComonent({ route, navigation }: any) {
     const nextIcon = require('../assets/icons/next.png');
     const backIcon = require('../assets/icons/back.png');
     const [checkV, setCheckV] = useState(false)
+    const [animatedScreen, setAnimatedScreen] = useState(true)
 
 
     const [qcmList, setQcmList] = useState<Qcm[]>([])
@@ -66,7 +67,12 @@ export default function QcmComonent({ route, navigation }: any) {
             setQcmOnScreen(qcmList[indexQcmOnScreen + 1])
             setIndexQcmOnScreen(prev => ++prev)
         }
+        setAnimatedScreen(false)
     }
+
+    useEffect(() => {
+        setAnimatedScreen(true)
+    }, [animatedScreen])
 
 
     const goToBackQcm = () => {
@@ -74,6 +80,7 @@ export default function QcmComonent({ route, navigation }: any) {
             setQcmOnScreen(qcmList[indexQcmOnScreen - 1])
             setIndexQcmOnScreen(prev => --prev)
         }
+        setAnimatedScreen(false)
     }
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -98,7 +105,7 @@ export default function QcmComonent({ route, navigation }: any) {
                             </Text>
                             {/* <Card.Image height={290} source={post.coverImage} /> */}
 
-                            <Text text90 color={Colors.green30}>Quiz {quiz.id}</Text>
+                            <Text text90 color={Colors.green30}>Quiz {quiz.order}</Text>
                             {/* <Text text90 color={Colors.green30}>
                                 {post.status}
                             </Text> */}
@@ -116,16 +123,16 @@ export default function QcmComonent({ route, navigation }: any) {
                             </View>
                         </View>
 
-                        <AnimatedScanner
+                        {animatedScreen && <AnimatedScanner
                             opacity={0.7}
                             progress={100}
                             duration={1500}
-                        />
+                        />}
 
                         <View flex paddingH-20 paddingT-20 >
-                            {qcmOnScreen.answers.map(answer => {
+                            {qcmOnScreen.answers.map((answer, index) => {
 
-                                return <View paddingB-20>
+                                return <View paddingB-20 key={index}>
                                     <Checkbox
                                         style={{ margin: 10, marginVertical: 20 }}
                                         value={answer.valid}
@@ -153,7 +160,7 @@ export default function QcmComonent({ route, navigation }: any) {
                         iconSource={backIcon} iconStyle={{ height: 10, width: 10 }}
                         size="medium" label="Précédent"
                         style={{ minWidth: 120 }} />
-                    <Text>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+                    <Text style={{ paddingLeft: 12 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
                     <Button onPress={goToNextQcm}
                         backgroundColor={Colors.green20}
                         iconOnRight iconSource={nextIcon}
