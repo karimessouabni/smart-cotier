@@ -12,6 +12,7 @@ import PasswordStatus from '../../components/auth-providers/PasswordStatus'
 import LottieView from 'lottie-react-native'
 import SaveButton from '../../components/styled/SaveBouton'
 import { FirebaseError } from 'firebase/app'
+import UserService from '../../services/UserService'
 
 export default function SignupScreen({ navigation }: any) {
     const [email, setEmail] = useState('')
@@ -88,7 +89,7 @@ export default function SignupScreen({ navigation }: any) {
         if (isReadyToSignUp) {
             try {
                 setSignupOn(true)
-                await createUserWithEmailAndPassword(auth, email, password)
+                let a = await createUserWithEmailAndPassword(auth, email, password)
                 setSignupOn(false)
             } catch (err: FirebaseError) {
                 setSignupOn(false)

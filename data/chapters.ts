@@ -7,7 +7,7 @@ export type Lesson = {
 }
 
 
-export type ChapterProgression = {
+export type LessonProgression = {
     chapterId: string;
     lessonId: string;
     progress: Progress;
@@ -18,7 +18,10 @@ export enum Progress {
     IN_PROGRESS = 'IN_PROGRESS',
     COMPLETED = 'COMPLETED',
 }
-
+export type ChapterProgress = {
+    id: string,
+    progress: number
+}
 
 export type Chapter = {
     id: string;

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
-import { ChapterProgression, Lesson, Progress } from '../data/chapters';
+import { LessonProgression, Lesson, Progress } from '../data/chapters';
 import Markdown from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserService from '../services/UserService';
@@ -12,31 +12,28 @@ import UserService from '../services/UserService';
 export type LearningCardProps = {
     chapterId: string
     lesson: Lesson
+    lessonProgress: Progress
 }
 
 
 export default function LearningCard({ route, navigation }: any) {
-    const { lesson, chapterId }: LearningCardProps = route.params
+    const { lesson, chapterId, lessonProgress }: LearningCardProps = route.params
     const carousel = useRef(null);
     const [firstText, setFirstText] = useState<String>("")
 
 
     useEffect(() => {
-        const updateChapterProgression = async () => {
-            await UserService.updateChapterProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.ZERO })
-        }
-        updateChapterProgression();
-    }, [])
-
-
-    useEffect(() => {
         const updateHeaderOptions = () => {
             navigation.setOptions({
-                // headerTitle: () => <>{<Text style={{ color: Colors.black }}>{label || 'Faites votre choix'}</Text>}</>,
                 headerRight: () => (
-                    <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => finishChapter()}>
-                        <MaterialCommunityIcons color={Colors.green10} size={25} name={'check-all'} />
-                    </TouchableOpacity>
+                    lessonProgress === Progress.COMPLETED ?
+                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => restartChapter()}>
+                            <MaterialCommunityIcons color={Colors.green10} size={25} name={'restart'} />
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => finishChapter()}>
+                            <MaterialCommunityIcons color={Colors.green10} size={25} name={'check-all'} />
+                        </TouchableOpacity>
                 )
             })
         }
@@ -46,9 +43,19 @@ export default function LearningCard({ route, navigation }: any) {
 
 
     const finishChapter = async () => {
-        await UserService.updateChapterProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.COMPLETED })
+        await UserService.updateLessonProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.COMPLETED })
+        await UserService.increaseChapterProgression(chapterId)
+
         navigation.goBack()
     }
+
+    const restartChapter = async () => {
+        await UserService.updateLessonProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.IN_PROGRESS })
+        await UserService.decreaseChapterProgression(chapterId)
+        // await UserService.setupProgressToZero()
+        navigation.goBack()
+    }
+
 
     const getWidth = () => {
         return Constants.windowWidth - Spacings.s5 * 2;
@@ -83,9 +90,7 @@ export default function LearningCard({ route, navigation }: any) {
                 pageWidth={getWidth()}
                 itemSpacings={Spacings.s3}
                 containerStyle={{ paddingTop: 20, height: 460, width: 400 }}
-                pageControlPosition={Carousel.pageControlPositions.UNDER}
-
-            >
+                pageControlPosition={Carousel.pageControlPositions.UNDER}>
                 {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
                     <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
                         <Image

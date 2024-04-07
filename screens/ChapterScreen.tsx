@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { Colors, BorderRadiuses, View, ListItem, Text, RadioButton } from 'react-native-ui-lib';
-import { ChapterProgression, Lesson, Progress } from '../data/chapters';
+import { LessonProgression, Lesson, Progress } from '../data/chapters';
 import { MaterialIcons } from '@expo/vector-icons';
 import LessonService from '../services/LessonService';
 import UserService from '../services/UserService';
@@ -15,13 +15,13 @@ export type LessonScreenProps = {
 export default function ChapterScreen({ route, navigation }: any) {
     const { chapterId }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
-    const [progressions, setProgressions] = useState<ChapterProgression[]>([])
+    const [progressions, setProgressions] = useState<LessonProgression[]>([])
 
 
     useFocusEffect(
         React.useCallback(() => {
             const fetchChapterProgression = async () => {
-                const fetchedChapProgres: ChapterProgression[] = await UserService.fetchAllProgressionOfChapter(chapterId)
+                const fetchedChapProgres: LessonProgression[] = await UserService.fetchAllProgressionOfLessons(chapterId)
                 setProgressions(fetchedChapProgres)
             }
             fetchChapterProgression();
@@ -31,13 +31,14 @@ export default function ChapterScreen({ route, navigation }: any) {
     );
 
     useEffect(() => {
+
         const fetchChapters = async () => {
             const fetchedLessons = await LessonService.fetchAllLessonOfChapter(chapterId)
             setLessons(fetchedLessons)
         }
 
         const fetchChapterProgression = async () => {
-            const fetchedChapProgres: ChapterProgression[] = await UserService.fetchAllProgressionOfChapter(chapterId)
+            const fetchedChapProgres: LessonProgression[] = await UserService.fetchAllProgressionOfLessons(chapterId)
             setProgressions(fetchedChapProgres)
         }
 
@@ -48,6 +49,10 @@ export default function ChapterScreen({ route, navigation }: any) {
 
     const checkLessonProgress = (lessonId: string): boolean => {
         return progressions.find(p => p.lessonId == lessonId)?.progress == Progress.COMPLETED ? true : false;
+    }
+
+    const getLessonProgress = (lessonId: string): Progress => {
+        return progressions.find(p => p.lessonId == lessonId)?.progress || Progress.ZERO;
     }
 
     const keyExtractor = (item: Lesson) => item.name;
@@ -61,7 +66,7 @@ export default function ChapterScreen({ route, navigation }: any) {
                     activeBackgroundColor={Colors.grey20}
                     activeOpacity={0.3}
                     height={77.5}
-                    onPress={() => navigation.navigate('LearningCard', { chapterId: chapterId, lesson: lesson })}
+                    onPress={() => navigation.navigate('LearningCard', { chapterId: chapterId, lesson: lesson, lessonProgress: getLessonProgress(lesson.id) })}
 
                 >
 
