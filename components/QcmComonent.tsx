@@ -1,9 +1,9 @@
 import { ScrollView } from "react-native-gesture-handler";
-import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Toast, RadioButton, Checkbox } from "react-native-ui-lib";
-import { Answer, Qcm, Quiz } from "../data/chapters";
+import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Checkbox } from "react-native-ui-lib";
+
 import { useEffect, useState } from "react";
 import QcmService from "../services/QcmService";
-import AnswerService from "../services/AnswerService";
+import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
 
 
 export default function QcmComonent({ route, navigation }: any) {
@@ -14,10 +14,14 @@ export default function QcmComonent({ route, navigation }: any) {
     const [checkV, setCheckV] = useState(false)
     const [animatedScreen, setAnimatedScreen] = useState(true)
 
+    const [userQuizResult, setUserQuizResult] = useState<UserQuizResult>({ quizId: quiz.id, passedDate: Date.now(), answeredQcm: [] } as unknown as UserQuizResult)
+    // const [answeredQcmList, setAnsweredQcmList] = useState<AnsweredQcm[]>([])
 
     const [qcmList, setQcmList] = useState<Qcm[]>([])
     const [qcmOnScreen, setQcmOnScreen] = useState<Qcm>()
     const [indexQcmOnScreen, setIndexQcmOnScreen] = useState<number>(0)
+    const [qcmUserAnswerIds, setQcmUserAnswerIds] = useState<string[]>([])
+
 
 
     useEffect(() => {
@@ -25,50 +29,19 @@ export default function QcmComonent({ route, navigation }: any) {
             const fetchedQcmList = await QcmService.fetchAllQcm(quiz.id)
             setQcmList(fetchedQcmList)
             setQcmOnScreen(fetchedQcmList[0])
-
         }
         fetcQcmList();
     }, [])
 
-    // useEffect(() => {
-    //     if (qcmList) {
-    //         const fetchAnswerList = async () => {
-    //             const fetchedAnswerList = await AnswerService.fetchAllAnswers(quiz.id, qcm.id)
-    //             setAnswerList(fetchedAnswerList)
 
-    //         }
-    //         fetchAnswerList();
-    //     }
-    // }, [qcmList])
-
-    const posts = [
-        {
-            coverImage: localImageSource,
-            title: 'Question 1',
-            status: '1/30',
-            timestamp: '31 August 2016',
-            description: 'Reference this table when designing your app’s interface, and make sure',
-            likes: 345,
-        },
-        {
-            title: 'New Post',
-            status: 'Draft',
-            timestamp: '07 March 2017',
-            description: 'This is the beginning of a new post',
-            likes: 0,
-        },
-    ];
-
-    const post = posts[0];
+    useEffect(() => {
+        console.log("starting quiz :", userQuizResult)
 
 
-    const goToNextQcm = () => {
-        if (qcmList[indexQcmOnScreen + 1]) {
-            setQcmOnScreen(qcmList[indexQcmOnScreen + 1])
-            setIndexQcmOnScreen(prev => ++prev)
-        }
-        setAnimatedScreen(false)
-    }
+    }, [])
+
+
+
 
     useEffect(() => {
         setAnimatedScreen(true)
@@ -82,11 +55,46 @@ export default function QcmComonent({ route, navigation }: any) {
         }
         setAnimatedScreen(false)
     }
+
+
+    const checkUncheckAnswer = (id: string) => {
+        setQcmUserAnswerIds(perv => {
+            return perv.includes(id) ? perv.filter(item => item !== id) : [...perv, id];
+        })
+        console.log(qcmUserAnswerIds)
+    }
+
+
+    const goToNextQcm = () => {
+
+        setUserQuizResult(prev => {
+            const answeredQcm = {
+                qcmId: qcmOnScreen?.id,
+                answeredId: qcmUserAnswerIds,
+                validAnswerId: qcmOnScreen?.answers.filter(answer => answer.valid == true).map(answer => answer.id)
+            } as AnsweredQcm
+            return {
+                ...prev,
+                answeredQcm: [...prev.answeredQcm, answeredQcm]
+            }
+
+        })
+
+        console.log("userQuizResult", userQuizResult)
+
+        if (qcmList[indexQcmOnScreen + 1]) {
+            setQcmOnScreen(qcmList[indexQcmOnScreen + 1])
+            setIndexQcmOnScreen(prev => ++prev)
+            setQcmUserAnswerIds([])
+        }
+        setAnimatedScreen(false)
+    }
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
 
 
-            {qcmOnScreen && <View >
+            {qcmOnScreen && <View>
                 <View flex padding-5>
                     <View paddingL-40 marginB-20>
                         <AnimatedScanner
@@ -103,13 +111,7 @@ export default function QcmComonent({ route, navigation }: any) {
                             <Text text40 color={Colors.grey10}>
                                 Question {indexQcmOnScreen + 1}
                             </Text>
-                            {/* <Card.Image height={290} source={post.coverImage} /> */}
-
                             <Text text90 color={Colors.green30}>Quiz {quiz.order}</Text>
-                            {/* <Text text90 color={Colors.green30}>
-                                {post.status}
-                            </Text> */}
-
                             <Text text70M color={Colors.grey10}>
                                 {qcmOnScreen.question}
                             </Text>
@@ -132,14 +134,19 @@ export default function QcmComonent({ route, navigation }: any) {
                         <View flex paddingH-20 paddingT-20 >
                             {qcmOnScreen.answers.map((answer, index) => {
 
-                                return <View paddingB-20 key={index}>
+                                return <View paddingB-20 key={index} >
                                     <Checkbox
+
                                         style={{ margin: 10, marginVertical: 20 }}
-                                        value={answer.valid}
-                                        onValueChange={value3 => setCheckV(prev => !prev)}
+                                        value={qcmUserAnswerIds.includes(answer.id)}
+                                        onValueChange={() => checkUncheckAnswer(answer.id)}
                                         borderRadius={3}
-                                        labelStyle={{ padding: 10 }}
-                                        containerStyle={{ backgroundColor: Colors.grey70, borderRadius: 5 }}
+                                        labelStyle={{ padding: 10, fontWeight: qcmUserAnswerIds.includes(answer.id) ? '500' : 'normal' }}
+                                        containerStyle={{
+                                            shadowOpacity: qcmUserAnswerIds.includes(answer.id) ? 0.1 : 0.02,
+                                            backgroundColor: qcmUserAnswerIds.includes(answer.id) ? Colors.grey60 : Colors.grey70,
+                                            borderRadius: 5
+                                        }}
                                         size={18}
                                         label={answer.text}
                                         color={Colors.green30}
@@ -150,24 +157,23 @@ export default function QcmComonent({ route, navigation }: any) {
                             }
                         </View>
                     </Card>
+                </View>
 
-                </View>
-                <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} />
-                <View row flex spread centerV padding-20 >
-                    <Button onPress={goToBackQcm}
-                        disabled={indexQcmOnScreen == 0}
-                        backgroundColor={Colors.green40}
-                        iconSource={backIcon} iconStyle={{ height: 10, width: 10 }}
-                        size="medium" label="Précédent"
-                        style={{ minWidth: 120 }} />
-                    <Text style={{ paddingLeft: 12 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
-                    <Button onPress={goToNextQcm}
-                        backgroundColor={Colors.green20}
-                        iconOnRight iconSource={nextIcon}
-                        iconStyle={{ height: 10, width: 10 }}
-                        marginL-10 size="medium" style={{ minWidth: 120 }}
-                        label={qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant"} />
-                </View>
+
+
+                <Button onPress={goToNextQcm}
+                    borderRadius={5}
+                    backgroundColor={Colors.green20}
+                    iconOnRight iconSource={nextIcon}
+                    marginH-10
+                    marginB-10
+                    iconStyle={{ height: 10, width: 10 }}
+                    size='large' style={{ minWidth: 120 }}
+                    label={qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant"} />
+
+                <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={Colors.grey30} />
+                <Text center style={{ paddingVertical: 5, paddingBottom: 49, color: Colors.grey30 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+
             </View>}
 
         </ScrollView>

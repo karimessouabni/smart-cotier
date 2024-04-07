@@ -1,7 +1,6 @@
 // import { Category, Sorters } from '../types'
 import { collection, getDocs, query } from 'firebase/firestore/lite'
 import { db } from '../firebase'
-import { Lesson } from '../data/chapters'
 
 class LearningCardService {
 

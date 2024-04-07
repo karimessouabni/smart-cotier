@@ -1,11 +1,9 @@
 // import { Category, Sorters } from '../types'
-import { addDoc, collection, doc, getDoc, getDocs, increment, orderBy, query, setDoc, updateDoc, where } from 'firebase/firestore/lite'
+import { collection, doc, getDoc, getDocs, increment, query, setDoc, updateDoc } from 'firebase/firestore/lite'
 import { db, auth } from '../firebase'
-import { Answer, LessonProgression, Qcm, Quiz } from '../data/chapters'
-import ChapterService from './ChapterService';
+import { LessonProgression } from 'types';
 
 class UserService {
-
 
     fetchAllProgressionOfLessons = async (chapterId: string) => {
         try {
@@ -17,7 +15,6 @@ class UserService {
             return []
         }
     }
-
 
 
     updateLessonProgression = async (chapterProgress: LessonProgression) => {

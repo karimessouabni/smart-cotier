@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, View, Text, AnimatedImage, Colors } from "react-native-ui-lib";
-import { Quiz } from "../data/chapters";
 import QuizService from "../services/QuizService";
 import { ScrollView } from "react-native-gesture-handler";
 import { Pressable } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { Quiz } from "types";
 
 
 

@@ -1,7 +1,7 @@
 // import { Category, Sorters } from '../types'
 import { collection, getDocs, orderBy, query } from 'firebase/firestore/lite'
 import { db } from '../firebase'
-import { Lesson } from '../data/chapters'
+import { Lesson } from 'types';
 
 class LessonService {
 

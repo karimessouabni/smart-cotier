@@ -4,6 +4,7 @@ import { Center, Icon, Input, Text, FormControl, WarningOutlineIcon, Pressable, 
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { useNavigation } from '@react-navigation/native'
 import { useTailwind } from 'tailwind-rn'
+import LottieView from 'lottie-react-native'
 
 import { auth } from '../../firebase'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
@@ -57,7 +58,17 @@ export default function EmailAuth() {
                     <Center>
                         <FormControl isInvalid={errorOnLoggin}>
                             <Stack mx={4} mt={10}>
-
+                                <Animated.View style={tw`relative items-center `}>
+                                    <LottieView
+                                        autoPlay
+                                        loop={false}
+                                        style={{
+                                            width: 200,
+                                            height: 200
+                                        }}
+                                        source={require('../../assets/animation/login.json')}
+                                    />
+                                </Animated.View>
                             </Stack>
 
                             <Stack m={4}>

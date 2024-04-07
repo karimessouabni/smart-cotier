@@ -12,7 +12,6 @@ import PasswordStatus from '../../components/auth-providers/PasswordStatus'
 import LottieView from 'lottie-react-native'
 import SaveButton from '../../components/styled/SaveBouton'
 import { FirebaseError } from 'firebase/app'
-import UserService from '../../services/UserService'
 
 export default function SignupScreen({ navigation }: any) {
     const [email, setEmail] = useState('')

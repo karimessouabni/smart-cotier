@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList } from 'react-native';
 import { Colors, BorderRadiuses, View, ListItem, Text, RadioButton } from 'react-native-ui-lib';
-import { LessonProgression, Lesson, Progress } from '../data/chapters';
 import { MaterialIcons } from '@expo/vector-icons';
 import LessonService from '../services/LessonService';
 import UserService from '../services/UserService';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { Lesson, LessonProgression, Progress } from 'types';
 
 export type LessonScreenProps = {
     chapterId: string
@@ -108,7 +108,6 @@ export default function ChapterScreen({ route, navigation }: any) {
         />
     );
 }
-
 
 
 const styles = StyleSheet.create({

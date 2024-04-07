@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { Colors, BorderRadiuses, View, Image, ListItem, Text, ProgressBar, AnimatedImage, AnimatedScanner } from 'react-native-ui-lib';
-import { Chapter } from '../data/chapters';
 import { MaterialIcons } from '@expo/vector-icons';
 import ChapterService from '../services/ChapterService';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { Chapter } from 'types';
 
 export default function HomeScreen({ navigation: { navigate } }: any) {
 

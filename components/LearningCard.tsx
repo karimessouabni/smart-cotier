@@ -2,10 +2,10 @@ import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
-import { LessonProgression, Lesson, Progress } from '../data/chapters';
 import Markdown from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserService from '../services/UserService';
+import { Lesson, Progress } from 'types';
 
 
 

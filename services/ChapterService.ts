@@ -1,7 +1,7 @@
 // import { Category, Sorters } from '../types'
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, orderBy, query, setDoc } from 'firebase/firestore/lite'
 import { auth, db } from '../firebase'
-import { Chapter, ChapterProgress } from '../data/chapters'
+import { Chapter, ChapterProgress } from 'types';
 
 class ChapterService {
 
