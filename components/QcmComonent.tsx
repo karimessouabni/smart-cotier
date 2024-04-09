@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { ScrollView } from "react-native-gesture-handler";
-import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Checkbox, Assets } from "react-native-ui-lib";
+import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Checkbox, Assets, ExpandableSection } from "react-native-ui-lib";
 
 import { useEffect, useState } from "react";
 import QcmService from "../services/QcmService";
@@ -55,15 +55,17 @@ export default function QcmComonent({ route, navigation }: any) {
 
 
     const checkUncheckAnswer = (id: string) => {
-        setQcmUserAnswerIds(perv => {
-            return perv.includes(id) ? perv.filter(item => item !== id) : [...perv, id];
-        })
+        if (!correctAnswer && !errorMessage) {
+            setQcmUserAnswerIds(perv => {
+                return perv.includes(id) ? perv.filter(item => item !== id) : [...perv, id];
+            })
+        }
     }
 
     const validateQcm = () => {
         setValidated(true)
         if (!_.isEqual(qcmUserAnswerIds, qcmValidAnswerIds)) {
-            setErrorMessage("Fausse réponse" + qcmOnScreen?.explain)
+            setErrorMessage(`Mauvaise réponse ${qcmOnScreen?.explain ? " : " + qcmOnScreen?.explain : ""} `)
         } else {
             setCorrectAnswer(true)
         }
@@ -93,9 +95,16 @@ export default function QcmComonent({ route, navigation }: any) {
         setAnimatedScreen(false)
     }
 
+    const terminateQcm = () => {
+
+        console.log("QCM is finished")
+        console.log({ ...userQuizResult })
+        console.log({ ...userQuizResult.answeredQcm })
+
+    }
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-            {qcmOnScreen && <View>
+            {qcmOnScreen && <View paddingB-40>
                 <View flex padding-5>
                     <View paddingL-40 marginB-20>
                         <AnimatedScanner
@@ -117,13 +126,13 @@ export default function QcmComonent({ route, navigation }: any) {
                                 {qcmOnScreen.question}
                             </Text>
 
-                            <Text text90 color={Colors.grey50}>
+                            <Text text90 color={Colors.grey40}>
                                 Sélectionner jusqu'a deux réponses
                             </Text>
-                            <View row spread>
-                                {/* {correctAnswer && <Button style={{ marginRight: 10 }} text90 link label="Bonne réponse" />} */}
+                            {/* <View row spread>
+                                {correctAnswer && <Button style={{ marginRight: 10 }} text90 link label="Bonne réponse" />}
                                 <Button text90 link label="Voir le cours" />
-                            </View>
+                            </View> */}
                         </View>
 
                         {animatedScreen && <AnimatedScanner
@@ -136,11 +145,11 @@ export default function QcmComonent({ route, navigation }: any) {
                             {qcmOnScreen.answers.map((answer, index) => {
                                 const answerIsClicked = qcmUserAnswerIds.includes(answer.id);
                                 const isCorrectAnswer = qcmUserAnswerIds.includes(answer.id) && correctAnswer;
-                                return <View paddingB-20 key={index} >
+                                const isGreenStyle = isCorrectAnswer || qcmValidAnswerIds.includes(answer.id) && errorMessage;
+                                return <View paddingB-20 key={index} onTouchEnd={() => checkUncheckAnswer(answer.id)}>
                                     <Checkbox
                                         style={{ margin: 10, marginVertical: 20 }}
                                         value={qcmUserAnswerIds.includes(answer.id)}
-                                        onValueChange={() => checkUncheckAnswer(answer.id)}
                                         borderRadius={3}
                                         labelStyle={{
                                             padding: 10, color: !qcmValidAnswerIds.includes(answer.id) &&
@@ -148,13 +157,13 @@ export default function QcmComonent({ route, navigation }: any) {
                                                 errorMessage ? Colors.white : Colors.$textDefault, fontWeight: qcmUserAnswerIds.includes(answer.id) ? '500' : 'normal'
                                         }}
                                         containerStyle={{
-                                            shadowColor: isCorrectAnswer || qcmValidAnswerIds.includes(answer.id) && errorMessage ? Colors.green30 :
+                                            shadowColor: isGreenStyle ? Colors.green30 :
                                                 Colors.grey70,
-                                            borderColor: isCorrectAnswer || qcmValidAnswerIds.includes(answer.id) && errorMessage ? Colors.green30 :
+                                            borderColor: isGreenStyle ? Colors.green30 :
                                                 Colors.grey70,
                                             borderEndEndRadius: 20,
-                                            borderWidth: 1,
-                                            shadowOpacity: isCorrectAnswer || qcmValidAnswerIds.includes(answer.id) && errorMessage ? 0.9 : 0.02,
+                                            borderWidth: 0.2,
+                                            shadowOpacity: isGreenStyle ? 0.9 : 0.02,
                                             shadowOffset: { width: 2, height: 2 },
                                             shadowRadius: 10,
                                             backgroundColor: (answerIsClicked ?
@@ -166,7 +175,7 @@ export default function QcmComonent({ route, navigation }: any) {
                                         label={answer.text}
                                         color={!qcmValidAnswerIds.includes(answer.id) &&
                                             answerIsClicked &&
-                                            errorMessage ? Colors.white : Colors.green30}
+                                            errorMessage ? Colors.white : isGreenStyle ? Colors.green30 : Colors.$textDefault}
                                         iconColor={
                                             !qcmValidAnswerIds.includes(answer.id) &&
                                                 answerIsClicked &&
@@ -176,40 +185,31 @@ export default function QcmComonent({ route, navigation }: any) {
                             })
                             }
                         </View>
+
                         {errorMessage && <Text margin-20 text90 color={Colors.red30}>
                             {errorMessage}
                         </Text>}
+
+                        <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={Colors.grey30} />
+                        <Text center style={{ padding: 5, color: Colors.grey30 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+
                     </Card>
+
+
                 </View>
 
 
-
-
-                {validated ?
-                    <Button onPress={goToNextQcm}
-                        borderRadius={5}
-                        disabled={qcmUserAnswerIds.length == 0}
-                        backgroundColor={Colors.green20}
-                        iconOnRight iconSource={nextIcon}
-                        marginH-10
-                        marginB-10
-                        iconStyle={{ height: 10, width: 10 }}
-                        size='large' style={{ minWidth: 120 }}
-                        label={qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant"} />
-                    :
-                    <Button onPress={validateQcm}
-                        borderRadius={5}
-                        disabled={qcmUserAnswerIds.length == 0}
-                        backgroundColor={Colors.green20}
-                        // iconOnRight iconSource={nextIcon}
-                        marginH-10
-                        marginB-10
-                        iconStyle={{ height: 10, width: 10 }}
-                        size='large' style={{ minWidth: 120 }}
-                        label={"Valider"} />}
-
-                <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={Colors.grey30} />
-                <Text center style={{ paddingVertical: 5, paddingBottom: 49, color: Colors.grey30 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+                <Button onPress={validated ? qcmList.length == indexQcmOnScreen + 1 ? terminateQcm : goToNextQcm : validateQcm}
+                    borderRadius={5}
+                    disabled={qcmUserAnswerIds.length == 0}
+                    backgroundColor={Colors.green20}
+                    iconOnRight
+                    iconSource={validated && nextIcon}
+                    marginH-10
+                    marginB-10
+                    iconStyle={{ height: 10, width: 10 }}
+                    size='large' style={{ minWidth: 120 }}
+                    label={validated ? qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant" : "Valider"} />
 
             </View>}
 

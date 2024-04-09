@@ -6,7 +6,6 @@ import { Quiz } from 'types';
 class QuizService {
 
     fetchAllQuiz = async () => {
-        console.log('fetching all quizzes from Service')
         const q = query(this.getAllChapters(), orderBy('order'));
         const querySnapshot = await getDocs(q)
         return querySnapshot.docs.map((fbDoc) => {
