@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type Lesson = {
     id: string;
     name: string;
@@ -34,6 +36,7 @@ export type Chapter = {
 
 export type Quiz = {
     id: string;
+    userRate: number[]; // used for the quiz screen history line chart 
     order: string;
     qcms: Qcm[]
 }
@@ -54,7 +57,8 @@ export type Answer = {
 
 export type UserQuizResult = {
     quizId: string;
-    passedDate: Date;
+    createdDate: Timestamp;
+    rate: number;
     answeredQcm: AnsweredQcm[];
 }
 

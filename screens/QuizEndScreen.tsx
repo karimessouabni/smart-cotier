@@ -7,6 +7,7 @@ import { AreaChart, BarChart, Grid, YAxis, PieChart } from 'react-native-svg-cha
 
 import LottieView from 'lottie-react-native'
 import tw from 'twrnc'
+import UserService from 'services/UserService';
 
 export type LessonScreenProps = {
     quiz: Quiz
@@ -17,6 +18,11 @@ export default function QuizEndScreen({ route, navigation }: any) {
     const data = [0, 60, 10, 90]
     const fill = 'rgb(134, 65, 244)'
 
+    const msgs = ["🌊 Ne vous découragez pas ! Chaque erreur est une étape vers la réussite. Prenez un moment pour revoir les points à améliorer et réessayez. Vous êtes sur le bon chemin !",
+        "⛵ Qui a dit que naviguer était facile ? Même les plus grands marins ont dû apprendre à ajuster leurs voiles. Revoyez vos notes, et bientôt, vous serez le capitaine de votre propre navire !",
+        "⚓️ Gardez votre cap ! La mer n'a pas été explorée en un jour. Prenez le temps de réviser et la prochaine fois, vous naviguerez vers la réussite.",
+        "🚤 Félicitations pour tout le travail accompli jusqu'à présent ! Chaque examen blanc est une étape de plus vers votre objectif. Continuez ainsi, et vous verrez, la prochaine fois sera la bonne !",
+        "🏆 Félicitations, futur capitaine ! Vous avez non seulement réussi, mais vous avez également prouvé que vous avez la discipline et la détermination nécessaires pour conquérir les mers."]
     const { quiz, userQuizResult }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
     const [progressions, setProgressions] = useState<LessonProgression[]>([])
@@ -24,8 +30,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     const [correctAnswerNbr, setCorrectAnswerNbr] = useState(0);
     const [wrongAnswerNbr, setWrongAnswerNbr] = useState(0);
-    const [rate, setRate] = useState(0);
-    const [message, setMessage] = useState("");
+    const [quizMessage, setQuizMessage] = useState("");
 
 
     useEffect(() => {
@@ -45,27 +50,13 @@ export default function QuizEndScreen({ route, navigation }: any) {
     }, [navigation])
 
     useEffect(() => {
-        setCorrectAnswerNbr(userQuizResult.answeredQcm.filter(qcm => qcm.rightReponse).length)
-        setWrongAnswerNbr(userQuizResult.answeredQcm.filter(qcm => !qcm.rightReponse).length)
-        const rate_correct = correctAnswerNbr / (correctAnswerNbr + wrongAnswerNbr) * 100;
-        setRate(correctAnswerNbr / (correctAnswerNbr + wrongAnswerNbr) * 100)
-
-        if (rate_correct < 20) {
-            setMessage("🌊 Ne vous découragez pas ! Chaque erreur est une étape vers la réussite. Prenez un moment pour revoir les points à améliorer et réessayez. Vous êtes sur le bon chemin !")
-        }
-        else if (rate_correct < 40) {
-            setMessage("⛵ Qui a dit que naviguer était facile ? Même les plus grands marins ont dû apprendre à ajuster leurs voiles. Revoyez vos notes, et bientôt, vous serez le capitaine de votre propre navire !")
-        }
-        else if (rate_correct < 60) {
-            setMessage("⚓️ Gardez votre cap ! La mer n'a pas été explorée en un jour. Prenez le temps de réviser et la prochaine fois, vous naviguerez vers la réussite.")
-        }
-        else if (rate_correct < 70) {
-            setMessage("🚤 Félicitations pour tout le travail accompli jusqu'à présent ! Chaque examen blanc est une étape de plus vers votre objectif. Continuez ainsi, et vous verrez, la prochaine fois sera la bonne !")
-        }
-        else if (rate_correct > 87) {
-            setMessage("🏆 Félicitations, futur capitaine ! Vous avez non seulement réussi, mais vous avez également prouvé que vous avez la discipline et la détermination nécessaires pour conquérir les mers.")
-        }
-
+        const ca = userQuizResult.answeredQcm.filter(qcm => qcm.rightReponse).length
+        const wa = userQuizResult.answeredQcm.filter(qcm => !qcm.rightReponse).length
+        setCorrectAnswerNbr(ca)
+        setWrongAnswerNbr(wa)
+        const rate = ca / (ca + wa) * 100
+        calculateMsg(rate)
+        UserService.saveUserQuizResult({ ...userQuizResult, rate: rate })
     }, [])
 
     const onAnimationFinish = () => {
@@ -80,6 +71,25 @@ export default function QuizEndScreen({ route, navigation }: any) {
             useNativeDriver: true,
         }).start();
     }, [fadeAnim]);
+
+    const calculateMsg = (rate: number) => {
+        if (rate < 20) {
+            setQuizMessage(msgs[0])
+        }
+        else if (rate < 40) {
+            setQuizMessage(msgs[1])
+        }
+        else if (rate < 60) {
+            setQuizMessage(msgs[2])
+        }
+        else if (rate < 70) {
+            setQuizMessage(msgs[3])
+        }
+        else if (rate > 87) {
+            setQuizMessage(msgs[4])
+        }
+    }
+
 
     return (
 
@@ -111,7 +121,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                         <Box px="4" alignSelf={'center'}>
                             <Heading textAlign={'justify'} py="5" size='xs' >
                                 <Text text70 >
-                                    {message}
+                                    {quizMessage}
                                 </Text>
                             </Heading>
                         </Box>

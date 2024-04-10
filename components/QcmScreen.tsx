@@ -16,7 +16,7 @@ export default function QcmScreen({ route, navigation }: any) {
     const [correctAnswer, setCorrectAnswer] = useState(false)
     const [animatedScreen, setAnimatedScreen] = useState(true)
 
-    const [userQuizResult, setUserQuizResult] = useState<UserQuizResult>({ quizId: quiz.id, passedDate: Date.now(), answeredQcm: [] } as unknown as UserQuizResult)
+    const [userQuizResult, setUserQuizResult] = useState<UserQuizResult>({ quizId: quiz.id, answeredQcm: [] } as unknown as UserQuizResult)
     // const [answeredQcmList, setAnsweredQcmList] = useState<AnsweredQcm[]>([])
 
     const [qcmList, setQcmList] = useState<Qcm[]>([])

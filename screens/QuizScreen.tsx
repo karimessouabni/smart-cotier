@@ -5,37 +5,64 @@ import { AreaChart, Grid, ProgressCircle, LineChart } from 'react-native-svg-cha
 
 import QuizService from "../services/QuizService";
 import { ScrollView } from "react-native-gesture-handler";
-import { Pressable } from "react-native";
+import { Pressable, RefreshControl } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
-import { Quiz } from "types";
+import { Quiz, UserQuizResult } from "types";
 import * as shape from 'd3-shape'
+import UserService from "services/UserService";
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
 export default function QuizScreen({ route, navigation }: any) {
 
-    const data = [0, 30, 50, 40, 95, 25, 40, 80]
-    const fill = Colors.green30
-
-    const cardImage = require('../assets/icon.png');
-    const quizImage = require('../assets/images/quiz.png'); // eslint-disable-line
-
-
+    const [refreshOnGoBack, setRefreshOnGoBack] = useState<boolean>(false)
+    const [refreshing, setRefreshing] = React.useState(false);
     const [quizList, setQuizList] = useState<Quiz[][]>([])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setRefreshOnGoBack(prev => !prev)
+            return () => {
+            };
+        }, [])
+    );
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 2000);
+    }, []);
+
+
+
 
 
     useEffect(() => {
-        const fetchChapters = async () => {
+        const fetchQuizList = async () => {
             const fetchedQuizzes = await QuizService.fetchAllQuiz()
             const quizMatrix: Quiz[][] = []; // Initialiser la matrice de quizz
-            for (let i = 0; i < fetchedQuizzes.length; i += 2) {
-                const row = fetchedQuizzes.slice(i, i + 2);
+
+            const promises = fetchedQuizzes.map(async (q) => {
+                const rates: number[] = await UserService.fetchScoreRateForAQuiz(q.id);
+                console.log(rates)
+                return { ...q, userRate: [0, ...rates] }
+            });
+            const quizListWithUserHistory = await Promise.all(promises);
+
+
+            for (let i = 0; i < quizListWithUserHistory.length; i += 2) {
+                const row = quizListWithUserHistory.slice(i, i + 2);
                 quizMatrix.push(row); // Ajouter cette ligne à la matrice de quizz
             }
+
             setQuizList(quizMatrix)
         }
-        fetchChapters();
-    }, [])
+
+        fetchQuizList();
+    }, [refreshOnGoBack])
+
 
 
     const renderRow = (quizTabOf2: Quiz[], index: number) =>
@@ -54,10 +81,10 @@ export default function QuizScreen({ route, navigation }: any) {
                             backgroundColor: "gray.50"
                         }}>
                             <Box>
-                                <AspectRatio w="100%" ratio={16 / 9}>
+                                <AspectRatio marginTop={2} w="100%" ratio={16 / 9}>
                                     <LineChart
                                         style={{ height: 50 }}
-                                        data={data}
+                                        data={quiz.userRate ? quiz.userRate : [0, 0]}
                                         numberOfTicks={0}
                                         svg={{ stroke: Colors.green30 }}
                                         curve={shape.curveNatural} />
@@ -77,14 +104,11 @@ export default function QuizScreen({ route, navigation }: any) {
                                 </Stack>
 
                                 <HStack alignItems="center" space={2} >
-                                    <HStack alignItems="center">
-                                        <Text fontWeight="400">
-                                            {'Dernier score : '}
-                                        </Text>
-                                        <Text color="coolGray.600" _dark={{
-                                            color: "warmGray.200"
-                                        }} fontWeight="400">
-                                            {"25/30"}
+                                    <HStack alignItems="center" >
+                                        <Text text90>
+                                            {quiz.userRate.length > 1 && 'Dernier score : '}
+                                        </Text><Text color="coolGray.600" text90>
+                                            {quiz.userRate.length > 1 ? `${quiz.userRate[quiz.userRate.length - 1]}%` : "Commencer le test"}
                                         </Text>
 
                                     </HStack>
@@ -100,7 +124,9 @@ export default function QuizScreen({ route, navigation }: any) {
         </View >
     return (
         <View marginT-10 >
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            } showsVerticalScrollIndicator={false}>
 
                 {quizList.map((q, index) => renderRow(q, index))}
             </ScrollView>

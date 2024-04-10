@@ -1,9 +1,44 @@
 // import { Category, Sorters } from '../types'
-import { collection, doc, getDoc, getDocs, increment, query, setDoc, updateDoc } from 'firebase/firestore/lite'
+import { collection, doc, orderBy, getDoc, getDocs, increment, query, addDoc, setDoc, updateDoc, Timestamp } from 'firebase/firestore/lite'
 import { db, auth } from '../firebase'
-import { LessonProgression } from 'types';
+import { LessonProgression, UserQuizResult } from 'types';
+import { limit, } from 'firebase/firestore';
 
 class UserService {
+    async saveUserQuizResult(userQuizResult: UserQuizResult) {
+        try {
+            console.log("saveUserQuizResult ✅")
+            const userQuizResultRes = await addDoc(collection(db, `users/${auth.currentUser?.uid}/quiz/${userQuizResult.quizId}/scores`),
+                {
+                    ...userQuizResult,
+                    createdDate: Timestamp.now(),
+                })
+            return userQuizResultRes.id
+        } catch (e) {
+            console.error('Error on saveUserQuizResult: ', e)
+            return null
+        }
+    }
+
+    fetchScoreRateForAQuiz = async (quizId: string) => {
+        try {
+            console.log("fetchScoreRateForAQuiz ✅")
+            const q = query(collection(db, `users/${auth.currentUser?.uid}/quiz/${quizId}/scores`), orderBy('createdDate', 'asc'));
+            const querySnapshot = await getDocs(q)
+            return querySnapshot.docs.map((fbDoc) => {
+                const data = fbDoc.data() as UserQuizResult
+                return data.rate ? data.rate : 0
+            })
+
+
+
+        } catch (e) {
+            console.error('Error on fetchAllProgressionOfLessons: ', e)
+            return []
+        }
+    }
+
+
 
     fetchAllProgressionOfLessons = async (chapterId: string) => {
         try {
