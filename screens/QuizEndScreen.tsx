@@ -4,7 +4,6 @@ import { ListItem, Text } from 'react-native-ui-lib';
 import { Lesson, LessonProgression, Quiz, UserQuizResult } from 'types';
 import { VStack, Box, Divider, AspectRatio, Center, Heading, Stack, CloseIcon, HStack } from 'native-base';
 import { AreaChart, BarChart, Grid, YAxis, PieChart } from 'react-native-svg-charts'
-// import AnimatedProgressWheel from 'react-native-progress-wheel';
 
 import LottieView from 'lottie-react-native'
 import tw from 'twrnc'
@@ -25,6 +24,9 @@ export default function QuizEndScreen({ route, navigation }: any) {
     const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
     const [correctAnswerNbr, setCorrectAnswerNbr] = useState(0);
     const [wrongAnswerNbr, setWrongAnswerNbr] = useState(0);
+    const [rate, setRate] = useState(0);
+    const [message, setMessage] = useState("");
+
 
     useEffect(() => {
         const updateHeaderOptions = () => {
@@ -45,6 +47,24 @@ export default function QuizEndScreen({ route, navigation }: any) {
     useEffect(() => {
         setCorrectAnswerNbr(userQuizResult.answeredQcm.filter(qcm => qcm.rightReponse).length)
         setWrongAnswerNbr(userQuizResult.answeredQcm.filter(qcm => !qcm.rightReponse).length)
+        const rate_correct = correctAnswerNbr / (correctAnswerNbr + wrongAnswerNbr) * 100;
+        setRate(correctAnswerNbr / (correctAnswerNbr + wrongAnswerNbr) * 100)
+
+        if (rate_correct < 20) {
+            setMessage("🌊 Ne vous découragez pas ! Chaque erreur est une étape vers la réussite. Prenez un moment pour revoir les points à améliorer et réessayez. Vous êtes sur le bon chemin !")
+        }
+        else if (rate_correct < 40) {
+            setMessage("⛵ Qui a dit que naviguer était facile ? Même les plus grands marins ont dû apprendre à ajuster leurs voiles. Revoyez vos notes, et bientôt, vous serez le capitaine de votre propre navire !")
+        }
+        else if (rate_correct < 60) {
+            setMessage("⚓️ Gardez votre cap ! La mer n'a pas été explorée en un jour. Prenez le temps de réviser et la prochaine fois, vous naviguerez vers la réussite.")
+        }
+        else if (rate_correct < 70) {
+            setMessage("🚤 Félicitations pour tout le travail accompli jusqu'à présent ! Chaque examen blanc est une étape de plus vers votre objectif. Continuez ainsi, et vous verrez, la prochaine fois sera la bonne !")
+        }
+        else if (rate_correct > 87) {
+            setMessage("🏆 Félicitations, futur capitaine ! Vous avez non seulement réussi, mais vous avez également prouvé que vous avez la discipline et la détermination nécessaires pour conquérir les mers.")
+        }
 
     }, [])
 
@@ -63,15 +83,12 @@ export default function QuizEndScreen({ route, navigation }: any) {
 
     return (
 
-        <ScrollView>
-
-
-
+        <ScrollView >
             <Animated.View // Special animatable View
                 style={{
+                    paddingBottom: 100,
                     opacity: fadeAnim, // Bind opacity to animated value
                 }}>
-
                 <Box rounded="lg" overflow="hidden" borderColor="coolGray.200" m={4} borderWidth="1" borderRadius={4} backgroundColor="gray.50">
                     <Animated.View style={tw`relative items-center `}>
                         <LottieView
@@ -84,37 +101,58 @@ export default function QuizEndScreen({ route, navigation }: any) {
                             }}
                             source={require('../assets/animation/congrats.json')} />
                     </Animated.View>
-
                     <VStack space="4" >
                         <Box px="4" alignItems={'center'} >
-                            <Heading size="md" >
+                            <Heading size='2xl' >
                                 Test blanc {quiz.order}
                             </Heading>
                         </Box>
                         <Divider />
-                        {/* <Box>
-
-                            <BarChart
-                                spacingInner={0.2}
-                                spacingOuter={10}
-                                numberOfTicks={2}
-
-                                style={{ height: 40 }}
-                                data={data} svg={{ fill }}
-                            >
-                                <Grid />
-                            </BarChart>
-
-                        </Box> */}
                         <Box px="4" alignSelf={'center'}>
-                            <Heading textAlign={'center'} size='sm' >
-                                Félicitation tu as obtenu un score meilleur que la dernière fois 🚀
+                            <Heading textAlign={'justify'} py="5" size='xs' >
+                                <Text text70 >
+                                    {message}
+                                </Text>
                             </Heading>
-
                         </Box>
+                        <Box px="4">
+                            <HStack style={{
+                                shadowColor: "black",
+                                borderColor: "black",
+                                borderRadius: 4,
+                                borderWidth: 0,
+                                shadowOpacity: 0.2,
+                                shadowOffset: { width: 2, height: 2 },
+                                shadowRadius: 3,
+                            }} bg="white" alignItems={'center'} p={4} justifyContent={'space-between'} >
+                                <Text text70  >
+                                    Taux de réponses correctes :
+                                </Text>
+                                <Text text70 >
+                                    {userQuizResult && correctAnswerNbr / (wrongAnswerNbr + correctAnswerNbr) * 100}%
+                                </Text>
+                            </HStack>
+                        </Box>
+                        <Box px="4">
+                            <HStack style={{
+                                shadowColor: "green",
+                                borderColor: "green",
+                                borderRadius: 4,
+                                borderWidth: 0,
+                                shadowOpacity: 0.2,
+                                shadowOffset: { width: 2, height: 2 },
+                                shadowRadius: 3,
 
-
-                        <Box px="4" >
+                            }} bg="green.200" alignItems={'center'} p={4} justifyContent={'space-between'} >
+                                <Text text70  >
+                                    Bonnes réponses :
+                                </Text>
+                                <Text text70 >
+                                    {userQuizResult && correctAnswerNbr}
+                                </Text>
+                            </HStack>
+                        </Box>
+                        <Box px="4" pb="4">
 
                             <HStack style={{
                                 shadowColor: "red",
@@ -130,32 +168,10 @@ export default function QuizEndScreen({ route, navigation }: any) {
                                     Mauvaises réponses :
                                 </Text>
                                 <Text text70 >
-                                    {userQuizResult && userQuizResult.answeredQcm.filter(qcm => !qcm.rightReponse).length}
-                                </Text>
-                            </HStack>
-
-                        </Box>
-                        <Box px="4" pb="4">
-                            <HStack style={{
-                                shadowColor: "green",
-                                borderColor: "green",
-                                borderRadius: 4,
-                                borderWidth: 0,
-                                shadowOpacity: 0.2,
-                                shadowOffset: { width: 2, height: 2 },
-                                shadowRadius: 3,
-
-                            }} bg="green.200" alignItems={'center'} p={4} justifyContent={'space-between'} >
-                                <Text text70  >
-                                    Bonne réponses :
-                                </Text>
-                                <Text text70 >
-                                    {userQuizResult && userQuizResult.answeredQcm.filter(qcm => qcm.rightReponse).length}
+                                    {userQuizResult && wrongAnswerNbr}
                                 </Text>
                             </HStack>
                         </Box>
-
-
                     </VStack>
                     <Divider></Divider>
 
@@ -164,11 +180,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                         valueAccessor={({ item }) => item.value}
                         outerRadius={80}
                         innerRadius={70}
-
-
                         style={{ height: 200 }}
-
-
                         data={[{
                             value: wrongAnswerNbr,
                             svg: {
@@ -199,16 +211,9 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     }} position="absolute" bottom="6" px="2" py="0.5">
                         ✅
                     </Center>
-
                 </Box>
-
-
             </Animated.View >
-
         </ScrollView >
     );
-
-
-
 }
 
