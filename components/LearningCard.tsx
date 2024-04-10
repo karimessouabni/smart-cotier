@@ -7,6 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserService from '../services/UserService';
 import { Lesson, Progress } from 'types';
 
+import { useTheme } from '@react-navigation/native'
 
 
 export type LearningCardProps = {
@@ -20,6 +21,7 @@ export default function LearningCard({ route, navigation }: any) {
     const { lesson, chapterId, lessonProgress }: LearningCardProps = route.params
     const carousel = useRef(null);
     const [firstText, setFirstText] = useState<String>("")
+    const { colors } = useTheme()
 
 
     useEffect(() => {
@@ -28,11 +30,11 @@ export default function LearningCard({ route, navigation }: any) {
                 headerRight: () => (
                     lessonProgress === Progress.COMPLETED ?
                         <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => restartChapter()}>
-                            <MaterialCommunityIcons color={Colors.green10} size={25} name={'restart'} />
+                            <MaterialCommunityIcons color={colors.primary} size={25} name={'restart'} />
                         </TouchableOpacity>
                         :
                         <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => finishChapter()}>
-                            <MaterialCommunityIcons color={Colors.green10} size={25} name={'check-all'} />
+                            <MaterialCommunityIcons color={colors.primary} size={25} name={'check-all'} />
                         </TouchableOpacity>
                 )
             })
@@ -71,13 +73,13 @@ export default function LearningCard({ route, navigation }: any) {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-            <Text text30M style={{ color: "#0a2540" }} margin-15>{lesson.name}</Text>
+            <Text text30M color={colors.primary} margin-15>{lesson.name}</Text>
 
             {/* <Text grey10 text70L margin-15> */}
             <Markdown style={{
-                body: { color: "#425466", paddingHorizontal: 15 },
-                heading3: { color: '#15be53', fontFamily: 'poppinsm', paddingTop: 20, paddingBottom: 5 },
-                code_block: { color: 'black', fontSize: 14 }
+                body: { color: colors.text, paddingHorizontal: 15 },
+                heading3: { color: colors.secondary, fontFamily: 'poppinsm', paddingTop: 20, paddingBottom: 5 },
+                code_block: { color: colors.text, fontSize: 14 }
             }}>
                 {`${formatStr()}`}
 

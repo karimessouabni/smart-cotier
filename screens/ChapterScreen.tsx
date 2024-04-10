@@ -6,6 +6,7 @@ import LessonService from '../services/LessonService';
 import UserService from '../services/UserService';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Lesson, LessonProgression, Progress } from 'types';
+import { useTheme } from '@react-navigation/native'
 
 export type LessonScreenProps = {
     chapterId: string
@@ -16,6 +17,7 @@ export default function ChapterScreen({ route, navigation }: any) {
     const { chapterId }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
     const [progressions, setProgressions] = useState<LessonProgression[]>([])
+    const { colors } = useTheme()
 
 
     useFocusEffect(
@@ -71,11 +73,12 @@ export default function ChapterScreen({ route, navigation }: any) {
                 >
 
                     <ListItem.Part left >
-                        <RadioButton containerStyle={{ margin: 10 }} selected={checkLessonProgress(lesson.id)} color='#30ba37' size={18} />
+                        <RadioButton containerStyle={{ margin: 10 }} selected={checkLessonProgress(lesson.id)} color={colors.primary} size={18} />
                     </ListItem.Part>
                     <ListItem.Part middle column containerStyle={[styles.border, { paddingRight: 17 }]}>
                         <ListItem.Part containerStyle={{ marginBottom: 3 }}>
-                            <Text grey10 text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
+                            <Text color={colors.text}
+                                text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
                                 {lesson.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
@@ -86,7 +89,7 @@ export default function ChapterScreen({ route, navigation }: any) {
                             <Text
                                 style={{ flex: 1, marginRight: 10 }}
                                 text90
-                                grey30
+                                color={colors.secondaryText}
                                 numberOfLines={1}
                             >{`en cours`}</Text>
                             <Text text90 color={statusColor} numberOfLines={1}>

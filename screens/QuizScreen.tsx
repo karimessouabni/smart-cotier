@@ -11,10 +11,11 @@ import { Quiz, UserQuizResult } from "types";
 import * as shape from 'd3-shape'
 import UserService from "services/UserService";
 import { useFocusEffect } from '@react-navigation/native';
-
+import { useTheme } from '@react-navigation/native'
 
 
 export default function QuizScreen({ route, navigation }: any) {
+    const { colors } = useTheme()
 
     const [refreshOnGoBack, setRefreshOnGoBack] = useState<boolean>(false)
     const [refreshing, setRefreshing] = React.useState(false);
@@ -46,11 +47,9 @@ export default function QuizScreen({ route, navigation }: any) {
 
             const promises = fetchedQuizzes.map(async (q) => {
                 const rates: number[] = await UserService.fetchScoreRateForAQuiz(q.id);
-                console.log(rates)
                 return { ...q, userRate: [0, ...rates] }
             });
             const quizListWithUserHistory = await Promise.all(promises);
-
 
             for (let i = 0; i < quizListWithUserHistory.length; i += 2) {
                 const row = quizListWithUserHistory.slice(i, i + 2);
@@ -73,42 +72,42 @@ export default function QuizScreen({ route, navigation }: any) {
                 <Pressable
                     flex={1} borderRadius="md"
                     borderWidth={0}
-                    paddingRight={index % 2 == 0 ? 2 : 0}
+                    paddingRight={index % 2 == 0 ? 10 : 0}
                     style={{ shadowRadius: 0, shadowColor: Colors.grey10 }}
                     onPress={() => navigation.navigate('QcmComonent', { quiz: quiz })}>
                     <Box alignItems="center">
-                        <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _light={{
-                            backgroundColor: "gray.50"
-                        }}>
+                        <Box maxW="80" rounded="lg" shadow={1} backgroundColor={colors.inputBg}>
                             <Box>
                                 <AspectRatio marginTop={2} w="100%" ratio={16 / 9}>
                                     <LineChart
-                                        style={{ height: 50 }}
-                                        data={quiz.userRate ? quiz.userRate : [0, 0]}
+                                        contentInset={{ top: 20, bottom: 20 }}
+                                        data={quiz.userRate.length > 1 ? quiz.userRate : [0, 0]}
                                         numberOfTicks={0}
-                                        svg={{ stroke: Colors.green30 }}
-                                        curve={shape.curveNatural} />
+                                        svg={{ stroke: colors.primary }}
+                                    />
                                 </AspectRatio>
                                 <Center bg="green.200" _text={{
                                     fontWeight: "300",
                                     fontSize: "xs"
                                 }} position="absolute" bottom="0" px="2" py="0.5">
-                                    Evolution
+                                    <Text text100M>
+                                        Evolution
+                                    </Text>
                                 </Center>
                             </Box>
                             <Stack p="4" space={3}>
                                 <Stack space={2}>
-                                    <Heading size="md">
+                                    <Heading color={colors.text} size="md">
                                         Test blanc {quiz.order}
                                     </Heading>
                                 </Stack>
 
                                 <HStack alignItems="center" space={2} >
                                     <HStack alignItems="center" >
-                                        <Text text90>
-                                            {quiz.userRate.length > 1 && 'Dernier score : '}
-                                        </Text><Text color="coolGray.600" text90>
-                                            {quiz.userRate.length > 1 ? `${quiz.userRate[quiz.userRate.length - 1]}%` : "Commencer le test"}
+                                        <Text text90 color={colors.secondaryText} >
+                                            {quiz.userRate.length > 1 ? 'Dernier score : ' : "Commencer le test"}
+                                        </Text><Text color={colors.text} text90>
+                                            {quiz.userRate.length > 1 && `${quiz.userRate[quiz.userRate.length - 1]}%`}
                                         </Text>
 
                                     </HStack>

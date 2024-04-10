@@ -7,6 +7,8 @@ import { Colors, View } from 'react-native-ui-lib';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import Waves from '../assets/svgs/waves.svg'
+import WavesNight from '../assets/svgs/waves-night.svg'
+
 import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
 import { HomeHeaderTabs } from './HomeHeaderTabs';
@@ -16,15 +18,16 @@ import { HomeHeaderTabs } from './HomeHeaderTabs';
 const BottomTab = createBottomTabNavigator()
 
 export function BottomTabNavigator() {
-    const { colors } = useTheme()
+    const { dark, colors } = useTheme()
 
-    const tabIconColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
+    const tabIconColor = (focused: boolean) => (focused ? colors.primary : colors.secondary)
 
     const headerRestoOpen = () => {
         return (
             <View style={{ marginTop: -150 }}>
-                < Waves style={{
-                }} width={"100%"} height={250} />
+                {dark ? < WavesNight style={{
+                }} width={"100%"} height={250} /> : < Waves style={{
+                }} width={"100%"} height={250} />}
             </View >
 
         )

@@ -15,11 +15,14 @@ import EmailLoginScreen from './screens/login-and-signup/EmailLoginScreen';
 import LoginScreen from './screens/login-and-signup/LoginScreen';
 import { BottomTabNavigator } from 'navigation/BottomTabNavigator';
 import QuizEndScreen from 'screens/QuizEndScreen';
-
+import useColorScheme from './hooks/useColorScheme'
+import { DarkTheme, LightTheme } from 'core/theme';
 
 
 export default function Navigation({ loggedIn }: { loggedIn: boolean; }) {
-    return <NavigationContainer >
+    const colorScheme = useColorScheme()
+
+    return <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : LightTheme}>
         <RootNavigator loggedIn={loggedIn} />
     </NavigationContainer>
 }
@@ -43,7 +46,7 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
                         shadowColor: 'transparent', // this covers iOS
                         elevation: 0 // this covers Android
                     },
-                    headerTintColor: Colors.green10,
+                    headerTintColor: colors.primary,
                     headerShadowVisible: false,
                     headerBackTitleVisible: false
                 }}>

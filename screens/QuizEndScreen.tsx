@@ -8,6 +8,7 @@ import { AreaChart, BarChart, Grid, YAxis, PieChart } from 'react-native-svg-cha
 import LottieView from 'lottie-react-native'
 import tw from 'twrnc'
 import UserService from 'services/UserService';
+import { useTheme } from '@react-navigation/native'
 
 export type LessonScreenProps = {
     quiz: Quiz
@@ -17,6 +18,7 @@ export type LessonScreenProps = {
 export default function QuizEndScreen({ route, navigation }: any) {
     const data = [0, 60, 10, 90]
     const fill = 'rgb(134, 65, 244)'
+    const { colors } = useTheme()
 
     const msgs = ["🌊 Ne vous découragez pas ! Chaque erreur est une étape vers la réussite. Prenez un moment pour revoir les points à améliorer et réessayez. Vous êtes sur le bon chemin !",
         "⛵ Qui a dit que naviguer était facile ? Même les plus grands marins ont dû apprendre à ajuster leurs voiles. Revoyez vos notes, et bientôt, vous serez le capitaine de votre propre navire !",
@@ -39,7 +41,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                 // headerTitle: () => <>{<Text style={{ color: "black" }}>{label || 'Faites votre choix'}</Text>}</>,
                 headerRight: () => (
                     <TouchableOpacity onPress={() => navigation.popToTop()}>
-                        <CloseIcon mx={4} size="6" mt="0.5" color={"green.900"} />
+                        <CloseIcon mx={4} size="6" mt="0.5" color={colors.primary} />
                     </TouchableOpacity>
                 ),
                 headerLeft: () => <></>
@@ -99,7 +101,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     paddingBottom: 100,
                     opacity: fadeAnim, // Bind opacity to animated value
                 }}>
-                <Box rounded="lg" overflow="hidden" borderColor="coolGray.200" m={4} borderWidth="1" borderRadius={4} backgroundColor="gray.50">
+                <Box rounded="lg" overflow="hidden" borderColor={colors.background2} m={4} borderWidth="1" borderRadius={4} backgroundColor={colors.background2}>
                     <Animated.View style={tw`relative items-center `}>
                         <LottieView
                             autoPlay
@@ -113,14 +115,14 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     </Animated.View>
                     <VStack space="4" >
                         <Box px="4" alignItems={'center'} >
-                            <Heading size='2xl' >
+                            <Heading color={colors.text} size='2xl' >
                                 Test blanc {quiz.order}
                             </Heading>
                         </Box>
                         <Divider />
                         <Box px="4" alignSelf={'center'}>
                             <Heading textAlign={'justify'} py="5" size='xs' >
-                                <Text text70 >
+                                <Text color={colors.text2} text70 >
                                     {quizMessage}
                                 </Text>
                             </Heading>
@@ -153,7 +155,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                                 shadowOffset: { width: 2, height: 2 },
                                 shadowRadius: 3,
 
-                            }} bg="green.200" alignItems={'center'} p={4} justifyContent={'space-between'} >
+                            }} bg={colors.primary} alignItems={'center'} p={4} justifyContent={'space-between'} >
                                 <Text text70  >
                                     Bonnes réponses :
                                 </Text>
@@ -173,7 +175,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                                 shadowOffset: { width: 2, height: 2 },
                                 shadowRadius: 1,
 
-                            }} bg="red.200" alignItems={'center'} p={4} justifyContent={'space-between'}>
+                            }} bg={colors.red} alignItems={'center'} p={4} justifyContent={'space-between'}>
                                 <Text text70 >
                                     Mauvaises réponses :
                                 </Text>
@@ -194,14 +196,14 @@ export default function QuizEndScreen({ route, navigation }: any) {
                         data={[{
                             value: wrongAnswerNbr,
                             svg: {
-                                fill: 'red',
+                                fill: colors.red,
                                 onPress: () => console.log('press red', wrongAnswerNbr),
                             },
                             key: `pie0`,
                         }, {
                             value: correctAnswerNbr,
                             svg: {
-                                fill: '#15be53',
+                                fill: colors.primary,
                                 onPress: () => console.log('press green ', correctAnswerNbr),
                             },
                             key: `pie1`,
@@ -209,13 +211,13 @@ export default function QuizEndScreen({ route, navigation }: any) {
                         }
 
                     />
-                    <Center bg="red.200" _text={{
+                    <Center bg={colors.red} _text={{
                         fontWeight: "300",
                         fontSize: "xs"
                     }} position="absolute" bottom="0" px="2" py="0.5">
                         ❌
                     </Center>
-                    <Center bg="green.200" _text={{
+                    <Center bg={colors.primary} _text={{
                         fontWeight: "300",
                         fontSize: "xs"
                     }} position="absolute" bottom="6" px="2" py="0.5">

@@ -5,11 +5,13 @@ import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Checkbo
 import { useEffect, useState } from "react";
 import QcmService from "../services/QcmService";
 import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
+import { useTheme } from '@react-navigation/native'
 
 
 export default function QcmScreen({ route, navigation }: any) {
     const { quiz }: { quiz: Quiz } = route.params
     const nextIcon = require('../assets/icons/next.png');
+    const { colors } = useTheme()
 
     const [validated, setValidated] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
@@ -111,21 +113,21 @@ export default function QcmScreen({ route, navigation }: any) {
                 <View flex padding-5>
                     <View paddingL-40 marginB-20>
                         <AnimatedScanner
-                            backgroundColor={Colors.green50}
+                            backgroundColor={colors.secondaryText}
                             progress={(indexQcmOnScreen + 1) / qcmList.length * 100}
                             duration={1600}
-                            containerStyle={{ backgroundColor: Colors.green30, height: 6 }}
+                            containerStyle={{ backgroundColor: colors.primary, height: 6 }}
                         />
                     </View>
 
-                    <Card containerStyle={{ marginBottom: 15 }} >
+                    <Card containerStyle={{ marginBottom: 15, backgroundColor: colors.background2 }} >
                         <Card.Image height={250} source={{ uri: qcmOnScreen.img }} />
                         <View padding-20>
-                            <Text text40 color={Colors.grey10}>
+                            <Text text40 color={colors.text}>
                                 Question {indexQcmOnScreen + 1}
                             </Text>
                             {/* {correctAnswer && <Text text50 color={Colors.green30}>Bonne réponse</Text>} */}
-                            <Text text70M color={Colors.grey10}>
+                            <Text text70M color={colors.text2}>
                                 {qcmOnScreen.question}
                             </Text>
 
@@ -160,9 +162,9 @@ export default function QcmScreen({ route, navigation }: any) {
                                                 errorMessage ? Colors.white : Colors.$textDefault, fontWeight: qcmUserAnswerIds.includes(answer.id) ? '500' : 'normal'
                                         }}
                                         containerStyle={{
-                                            shadowColor: isGreenStyle ? Colors.green30 :
+                                            shadowColor: isGreenStyle ? colors.primary :
                                                 Colors.grey70,
-                                            borderColor: isGreenStyle ? Colors.green30 :
+                                            borderColor: isGreenStyle ? colors.primary :
                                                 Colors.grey70,
                                             borderEndEndRadius: 20,
                                             borderWidth: 0.2,
@@ -178,7 +180,7 @@ export default function QcmScreen({ route, navigation }: any) {
                                         label={answer.text}
                                         color={!qcmValidAnswerIds.includes(answer.id) &&
                                             answerIsClicked &&
-                                            errorMessage ? Colors.white : isGreenStyle ? Colors.green30 : Colors.$textDefault}
+                                            errorMessage ? Colors.white : isGreenStyle ? colors.primary : Colors.$textDefault}
                                         iconColor={
                                             !qcmValidAnswerIds.includes(answer.id) &&
                                                 answerIsClicked &&
@@ -193,8 +195,8 @@ export default function QcmScreen({ route, navigation }: any) {
                             {errorMessage}
                         </Text>}
 
-                        <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={Colors.grey30} />
-                        <Text center style={{ padding: 5, color: Colors.grey30 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+                        <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={colors.text2} />
+                        <Text center style={{ padding: 5, color: colors.text2 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
 
                     </Card>
 
@@ -205,12 +207,14 @@ export default function QcmScreen({ route, navigation }: any) {
                 <Button onPress={validated ? qcmList.length == indexQcmOnScreen + 1 ? terminateQcm : goToNextQcm : validateQcm}
                     borderRadius={5}
                     disabled={qcmUserAnswerIds.length == 0}
-                    backgroundColor={Colors.green20}
+                    backgroundColor={colors.primary}
                     iconOnRight
                     iconSource={validated && nextIcon}
                     marginH-10
+                    paddingV-15
                     marginB-10
-                    iconStyle={{ height: 10, width: 10 }}
+                    labelStyle={{ fontSize: 20, fontWeight: '600', color: colors.text }}
+                    iconStyle={{ height: 15, width: 25, tintColor: colors.text }}
                     size='large' style={{ minWidth: 120 }}
                     label={validated ? qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant" : "Valider"} />
 

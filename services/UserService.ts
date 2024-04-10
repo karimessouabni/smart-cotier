@@ -7,7 +7,6 @@ import { limit, } from 'firebase/firestore';
 class UserService {
     async saveUserQuizResult(userQuizResult: UserQuizResult) {
         try {
-            console.log("saveUserQuizResult ✅")
             const userQuizResultRes = await addDoc(collection(db, `users/${auth.currentUser?.uid}/quiz/${userQuizResult.quizId}/scores`),
                 {
                     ...userQuizResult,

@@ -5,9 +5,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ChapterService from '../services/ChapterService';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Chapter } from 'types';
+import { useTheme } from '@react-navigation/native'
 
 export default function HomeScreen({ navigation: { navigate } }: any) {
-
+    const { colors } = useTheme()
     const [chapters, setChapters] = useState<Chapter[]>([])
     const [refreshOnGoBack, setRefreshOnGoBack] = useState<boolean>(false)
     const [refreshing, setRefreshing] = React.useState(false);
@@ -53,9 +54,9 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                     <ListItem.Part left>
                         <AnimatedImage source={{ uri: chapter.img }} style={styles.image} />
                     </ListItem.Part>
-                    <ListItem.Part middle column containerStyle={[styles.border, { paddingRight: 17 }]}>
+                    <ListItem.Part middle column containerStyle={[{ paddingRight: 17 }]}>
                         <ListItem.Part containerStyle={{ marginBottom: 3 }}>
-                            <Text grey10 text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
+                            <Text color={colors.text} text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
                                 {chapter.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
@@ -64,13 +65,11 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                         </ListItem.Part>
                         <ListItem.Part>
                             <Text
-                                style={{ flex: 1, marginRight: 10 }}
+                                style={{ flex: 1, marginRight: 10, marginBottom: 4 }}
                                 text90
-                                grey30
+                                color={colors.secondaryText}
                                 numberOfLines={1}
                             >{`${chapter.nbrLesson} séctions`}</Text>
-                            <Text text90 color={statusColor} numberOfLines={1}>
-                            </Text>
                         </ListItem.Part>
                         <View >
                             <AnimatedScanner
@@ -92,6 +91,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
 
     return (
         chapters.length > 0 && <FlatList
+            showsVerticalScrollIndicator={false}
             data={chapters}
             renderItem={({ item, index }) => renderRow(item, index)}
             keyExtractor={keyExtractor}
@@ -116,3 +116,5 @@ const styles = StyleSheet.create({
         borderColor: Colors.grey70
     }
 });
+
+

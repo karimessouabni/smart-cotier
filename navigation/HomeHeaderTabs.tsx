@@ -15,8 +15,8 @@ const HomeHeaderTab = createMaterialTopTabNavigator()
 // for the categories, modifiers and labels
 export const HomeHeaderTabs = () => {
     const { colors } = useTheme()
-    const headerTextColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
-    const headerIconColor = (focused: boolean) => (focused ? Colors.green10 : "#2F4858")
+    const headerTextColor = (focused: boolean) => (focused ? colors.text : colors.secondaryText)
+    const headerIconColor = (focused: boolean) => (focused ? colors.primary : colors.secondary)
 
     return (
         <HomeHeaderTab.Navigator
