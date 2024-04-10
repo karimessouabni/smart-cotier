@@ -60,6 +60,5 @@ export type UserQuizResult = {
 
 export type AnsweredQcm = {
     qcmId: string;
-    answeredId: string[];
-    validAnswerId: string[];
+    rightReponse: boolean;
 }

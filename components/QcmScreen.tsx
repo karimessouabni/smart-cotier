@@ -7,7 +7,7 @@ import QcmService from "../services/QcmService";
 import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
 
 
-export default function QcmComonent({ route, navigation }: any) {
+export default function QcmScreen({ route, navigation }: any) {
     const { quiz }: { quiz: Quiz } = route.params
     const nextIcon = require('../assets/icons/next.png');
 
@@ -64,10 +64,21 @@ export default function QcmComonent({ route, navigation }: any) {
 
     const validateQcm = () => {
         setValidated(true)
-        if (!_.isEqual(qcmUserAnswerIds, qcmValidAnswerIds)) {
-            setErrorMessage(`Mauvaise réponse ${qcmOnScreen?.explain ? " : " + qcmOnScreen?.explain : ""} `)
-        } else {
+
+        const rightResponse = _.isEqual(qcmUserAnswerIds, qcmValidAnswerIds)
+        setUserQuizResult(prev => {
+            const answeredQcm = {
+                qcmId: qcmOnScreen?.id,
+                rightReponse: rightResponse
+            } as AnsweredQcm
+            return { ...prev, answeredQcm: [...prev.answeredQcm, answeredQcm] } as UserQuizResult
+        })
+
+
+        if (rightResponse) {
             setCorrectAnswer(true)
+        } else {
+            setErrorMessage(`Mauvaise réponse ${qcmOnScreen?.explain ? " : " + qcmOnScreen?.explain : ""}`)
         }
     }
 
@@ -78,28 +89,20 @@ export default function QcmComonent({ route, navigation }: any) {
         setCorrectAnswer(false)
         setErrorMessage("")
         setQcmUserAnswerIds([])
-
-        setUserQuizResult(prev => {
-            const answeredQcm = {
-                qcmId: qcmOnScreen?.id,
-                answeredId: qcmUserAnswerIds,
-                validAnswerId: qcmValidAnswerIds
-            } as AnsweredQcm
-            return { ...prev, answeredQcm: [...prev.answeredQcm, answeredQcm] } as UserQuizResult
-        })
+        setAnimatedScreen(false)
 
         if (qcmList[indexQcmOnScreen + 1]) {
             setQcmOnScreen(qcmList[indexQcmOnScreen + 1])
             setIndexQcmOnScreen(prev => ++prev)
         }
-        setAnimatedScreen(false)
     }
 
     const terminateQcm = () => {
 
         console.log("QCM is finished")
         console.log({ ...userQuizResult })
-        console.log({ ...userQuizResult.answeredQcm })
+        console.log(userQuizResult.answeredQcm)
+        navigation.navigate('QuizEndScreen', { quiz: quiz, userQuizResult: userQuizResult })
 
     }
     return (

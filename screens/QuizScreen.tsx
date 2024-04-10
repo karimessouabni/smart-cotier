@@ -71,8 +71,8 @@ export default function QuizScreen({ route, navigation }: any) {
                             </Box>
                             <Stack p="4" space={3}>
                                 <Stack space={2}>
-                                    <Heading size="md" >
-                                        Exam {quiz.order}
+                                    <Heading size="md">
+                                        Test blanc {quiz.order}
                                     </Heading>
                                 </Stack>
 
