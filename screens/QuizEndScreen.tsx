@@ -13,6 +13,7 @@ import { useTheme } from '@react-navigation/native'
 export type LessonScreenProps = {
     quiz: Quiz
     userQuizResult: UserQuizResult
+    setIsQuizCompleted: any
 }
 
 export default function QuizEndScreen({ route, navigation }: any) {
@@ -25,7 +26,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
         "⚓️ Gardez votre cap ! La mer n'a pas été explorée en un jour. Prenez le temps de réviser et la prochaine fois, vous naviguerez vers la réussite.",
         "🚤 Félicitations pour tout le travail accompli jusqu'à présent ! Chaque examen blanc est une étape de plus vers votre objectif. Continuez ainsi, et vous verrez, la prochaine fois sera la bonne !",
         "🏆 Félicitations, futur capitaine ! Vous avez non seulement réussi, mais vous avez également prouvé que vous avez la discipline et la détermination nécessaires pour conquérir les mers."]
-    const { quiz, userQuizResult }: LessonScreenProps = route.params
+    const { quiz, userQuizResult, setIsQuizCompleted }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
     const [progressions, setProgressions] = useState<LessonProgression[]>([])
     const [lottieFinished, setLottieFinished] = useState(false);
@@ -33,9 +34,11 @@ export default function QuizEndScreen({ route, navigation }: any) {
     const [correctAnswerNbr, setCorrectAnswerNbr] = useState(0);
     const [wrongAnswerNbr, setWrongAnswerNbr] = useState(0);
     const [quizMessage, setQuizMessage] = useState("");
+    const [annimationFailed, setAnnimationFailed] = useState(false);
 
 
     useEffect(() => {
+        setIsQuizCompleted(prev => true)
         const updateHeaderOptions = () => {
             navigation.setOptions({
                 // headerTitle: () => <>{<Text style={{ color: "black" }}>{label || 'Faites votre choix'}</Text>}</>,
@@ -58,6 +61,8 @@ export default function QuizEndScreen({ route, navigation }: any) {
         setWrongAnswerNbr(wa)
         const rate = ca / (ca + wa) * 100
         calculateMsg(rate)
+        rate < 87 && setAnnimationFailed(true)
+
         UserService.saveUserQuizResult({ ...userQuizResult, rate: rate })
     }, [])
 
@@ -102,17 +107,30 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     opacity: fadeAnim, // Bind opacity to animated value
                 }}>
                 <Box rounded="lg" overflow="hidden" borderColor={colors.background2} m={4} borderWidth="1" borderRadius={4} backgroundColor={colors.background2}>
-                    <Animated.View style={tw`relative items-center `}>
-                        <LottieView
-                            autoPlay
-                            onAnimationFinish={onAnimationFinish}
-                            loop={false}
-                            style={{
-                                width: 200,
-                                height: 200
-                            }}
-                            source={require('../assets/animation/congrats.json')} />
-                    </Animated.View>
+                    {annimationFailed ?
+                        <Animated.View style={tw`relative items-center `}>
+                            <LottieView
+                                autoPlay
+                                onAnimationFinish={onAnimationFinish}
+                                loop={false}
+                                style={{
+                                    width: 200,
+                                    height: 200
+                                }}
+                                source={require("../assets/animation/failed.json")} />
+                        </Animated.View>
+                        :
+                        <Animated.View style={tw`relative items-center `}>
+                            <LottieView
+                                autoPlay
+                                onAnimationFinish={onAnimationFinish}
+                                loop={false}
+                                style={{
+                                    width: 200,
+                                    height: 200
+                                }}
+                                source={require("../assets/animation/congrats.json")} />
+                        </Animated.View>}
                     <VStack space="4" >
                         <Box px="4" alignItems={'center'} >
                             <Heading color={colors.text} size='2xl' >

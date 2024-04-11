@@ -56,24 +56,13 @@ export function BottomTabNavigator() {
                 }}
             />
 
-            <BottomTab.Screen
-                name="orders"
-                component={QuizScreen}
-                options={{
-                    headerTitle: "",
-                    headerShown: false,
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'bell-ring' : 'bell-ring-outline'} />
-                    // tabBarButton: ({ children }) => <Example />
-                }}
-            />
-
 
             <BottomTab.Screen
                 name="store"
                 component={HomeScreen}
                 options={{
                     headerShown: false,
-                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'cog' : 'cog-outline'} />
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'account' : 'account-outline'} />
                 }}
             />
         </BottomTab.Navigator>

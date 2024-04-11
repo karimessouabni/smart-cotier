@@ -53,6 +53,21 @@ export default function ChapterScreen({ route, navigation }: any) {
         return progressions.find(p => p.lessonId == lessonId)?.progress == Progress.COMPLETED ? true : false;
     }
 
+    const getLessonProgressMsg = (lessonId: string): string => {
+        const progress = progressions.find(p => p.lessonId == lessonId)?.progress
+        switch (progress) {
+            case Progress.IN_PROGRESS: {
+                return "en cours"
+            }
+            case Progress.COMPLETED: {
+                return "terminé"
+            }
+            default: {
+                return "non commencé"
+            }
+        }
+    }
+
     const getLessonProgress = (lessonId: string): Progress => {
         return progressions.find(p => p.lessonId == lessonId)?.progress || Progress.ZERO;
     }
@@ -91,7 +106,7 @@ export default function ChapterScreen({ route, navigation }: any) {
                                 text90
                                 color={colors.secondaryText}
                                 numberOfLines={1}
-                            >{`en cours`}</Text>
+                            >{getLessonProgressMsg(lesson.id)}</Text>
                             <Text text90 color={statusColor} numberOfLines={1}>
                             </Text>
                         </ListItem.Part>

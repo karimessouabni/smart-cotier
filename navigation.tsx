@@ -8,7 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import ChapterScreen from './screens/ChapterScreen';
 import LearningCard from './components/LearningCard';
 import QuizScreen from './screens/QuizScreen';
-import QcmScreen from './components/QcmScreen';
+import QcmScreen from './screens/QcmScreen';
 import ResetPasswordScreen from './screens/login-and-signup/ResetPasswordScreen';
 import SignupScreen from './screens/login-and-signup/SignupScreen';
 import EmailLoginScreen from './screens/login-and-signup/EmailLoginScreen';
@@ -76,7 +76,7 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
                             })} />
                         <Stack.Screen name="LearningCard" component={LearningCard} options={{ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: "", presentation: 'card' }} />
                         <Stack.Screen name="QuizScreen" component={QuizScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card' })} />
-                        <Stack.Screen name="QcmComonent" component={QcmScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
+                        <Stack.Screen name="QcmComonent" component={QcmScreen} options={({ route }) => ({ gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
                         <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
 
                     </>

@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import QcmService from "../services/QcmService";
 import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
 import { useTheme } from '@react-navigation/native'
+import ConfirmationAlert from '../components/styled/ConfirmationAlert';
+import { Alert } from 'react-native';
 
 
 export default function QcmScreen({ route, navigation }: any) {
@@ -26,8 +28,31 @@ export default function QcmScreen({ route, navigation }: any) {
     const [indexQcmOnScreen, setIndexQcmOnScreen] = useState<number>(0)
     const [qcmUserAnswerIds, setQcmUserAnswerIds] = useState<string[]>([])
     const [qcmValidAnswerIds, setQcmValidAnswerIds] = useState<string[]>([])
+    const [isQuizCompleted, setIsQuizCompleted] = useState(false);
 
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            if (isQuizCompleted) {
+                return;
+            }
+            e.preventDefault();
+            Alert.alert(
+                'Quitter le QCM ?',
+                'Êtes-vous sûr de vouloir quitter ? Tout progrès non sauvegardé sera perdu.',
+                [
+                    { text: "Rester", style: 'cancel', onPress: () => { } },
+                    {
+                        text: 'Quitter',
+                        style: 'destructive',
+                        onPress: () => navigation.dispatch(e.data.action),
+                    },
+                ]
+            );
+        });
+
+        return unsubscribe;
+    }, [navigation, isQuizCompleted]);
 
     useEffect(() => {
         const fetcQcmList = async () => {
@@ -76,7 +101,6 @@ export default function QcmScreen({ route, navigation }: any) {
             return { ...prev, answeredQcm: [...prev.answeredQcm, answeredQcm] } as UserQuizResult
         })
 
-
         if (rightResponse) {
             setCorrectAnswer(true)
         } else {
@@ -104,13 +128,18 @@ export default function QcmScreen({ route, navigation }: any) {
         console.log("QCM is finished")
         console.log({ ...userQuizResult })
         console.log(userQuizResult.answeredQcm)
-        navigation.navigate('QuizEndScreen', { quiz: quiz, userQuizResult: userQuizResult })
-
+        navigation.navigate('QuizEndScreen', {
+            quiz: quiz, userQuizResult: userQuizResult, setIsQuizCompleted: setIsQuizCompleted
+        })
     }
-    return (
+
+
+
+    return (<>
+
         <ScrollView showsVerticalScrollIndicator={false}>
             {qcmOnScreen && <View paddingB-40>
-                <View flex padding-5>
+                <View flex>
                     <View paddingL-40 marginB-20>
                         <AnimatedScanner
                             backgroundColor={colors.secondaryText}
@@ -180,7 +209,7 @@ export default function QcmScreen({ route, navigation }: any) {
                                         label={answer.text}
                                         color={!qcmValidAnswerIds.includes(answer.id) &&
                                             answerIsClicked &&
-                                            errorMessage ? Colors.white : isGreenStyle ? colors.primary : Colors.$textDefault}
+                                            errorMessage ? Colors.white : isGreenStyle ? colors.secondary : Colors.$textDefault}
                                         iconColor={
                                             !qcmValidAnswerIds.includes(answer.id) &&
                                                 answerIsClicked &&
@@ -213,13 +242,14 @@ export default function QcmScreen({ route, navigation }: any) {
                     marginH-10
                     paddingV-15
                     marginB-10
-                    labelStyle={{ fontSize: 20, fontWeight: '600', color: colors.text }}
-                    iconStyle={{ height: 15, width: 25, tintColor: colors.text }}
+                    labelStyle={{ fontSize: 18, fontWeight: '500', color: colors.background }}
+                    iconStyle={{ height: 15, width: 25, tintColor: colors.background }}
                     size='large' style={{ minWidth: 120 }}
                     label={validated ? qcmList.length == indexQcmOnScreen + 1 ? "Terminer" : "Suivant" : "Valider"} />
 
             </View>}
 
         </ScrollView>
+    </>
     )
 }
