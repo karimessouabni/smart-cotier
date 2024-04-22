@@ -5,8 +5,8 @@ config()
 
 module.exports = {
     expo: {
-        name: 'smart-cotier',
-        slug: 'smart-cotier',
+        name: 'CotierPro',
+        slug: 'CotierPro',
         owner: 'ekitlab',
         version: '1.0.0',
         orientation: 'portrait',
@@ -30,7 +30,7 @@ module.exports = {
         },
         assetBundlePatterns: ['**/*'],
         ios: {
-            googleServicesFile: './GoogleService-Info.plist',
+            // googleServicesFile: './GoogleService-Info.plist',
             usesAppleSignIn: true,
             supportsTablet: true,
             bundleIdentifier: 'com.ekit.app.prod'
@@ -38,7 +38,7 @@ module.exports = {
         android: {
             package: 'com.ekit.app.prod',
             versionCode: 5,
-            googleServicesFile: './google-services-prod.json',
+            // googleServicesFile: './google-services-prod.json',
             adaptiveIcon: {
                 foregroundImage: './assets/images/icon.png',
                 backgroundColor: '#ffffff'
@@ -48,6 +48,9 @@ module.exports = {
             favicon: './assets/icon.png'
         },
         extra: {
+              eas: {
+                projectId: '4ea74c36-0204-40ba-9776-548bc7ed3fb4'
+            },
             
             firebaseApiKey: process.env.DEV_FIREBASE_API_KEY,
             firebaseAuthDomain: process.env.DEV_FIREBASE_AUTH_DOMAIN,

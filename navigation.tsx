@@ -17,6 +17,9 @@ import { BottomTabNavigator } from 'navigation/BottomTabNavigator';
 import QuizEndScreen from 'screens/QuizEndScreen';
 import useColorScheme from './hooks/useColorScheme'
 import { DarkTheme, LightTheme } from 'core/theme';
+import SettingsScreen from 'screens/settings/SettingsScreen';
+import Contact from 'screens/settings/Contact';
+import BugSignal from 'screens/settings/BugSignal';
 
 
 export default function Navigation({ loggedIn }: { loggedIn: boolean; }) {
@@ -76,6 +79,9 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
                             })} />
                         <Stack.Screen name="LearningCard" component={LearningCard} options={{ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: "", presentation: 'card' }} />
                         <Stack.Screen name="QuizScreen" component={QuizScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card' })} />
+                        <Stack.Screen name="Contact" component={Contact} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card' })} />
+                        <Stack.Screen name="BugSignal" component={BugSignal} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'modal', headerTitle: 'Signalez un bug' })} />
+
                         <Stack.Screen name="QcmComonent" component={QcmScreen} options={({ route }) => ({ gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
                         <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
 
@@ -93,3 +99,5 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
         </Stack.Navigator>
     )
 }
+
+

@@ -163,10 +163,7 @@ export default function QcmScreen({ route, navigation }: any) {
                             <Text text90 color={Colors.grey40}>
                                 Sélectionner jusqu'a deux réponses
                             </Text>
-                            {/* <View row spread>
-                                {correctAnswer && <Button style={{ marginRight: 10 }} text90 link label="Bonne réponse" />}
-                                <Button text90 link label="Voir le cours" />
-                            </View> */}
+
                         </View>
 
                         {animatedScreen && <AnimatedScanner
@@ -218,6 +215,9 @@ export default function QcmScreen({ route, navigation }: any) {
                                 </View>
                             })
                             }
+                            <View row spread>
+                                <Button text90 link label="Signalez un Bug" onPress={() => navigation.navigate("BugSignal", { qcmId: qcmOnScreen.id })} />
+                            </View>
                         </View>
 
                         {errorMessage && <Text margin-20 text90 color={Colors.red30}>
@@ -225,7 +225,9 @@ export default function QcmScreen({ route, navigation }: any) {
                         </Text>}
 
                         <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={colors.text2} />
+
                         <Text center style={{ padding: 5, color: colors.text2 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+
 
                     </Card>
 

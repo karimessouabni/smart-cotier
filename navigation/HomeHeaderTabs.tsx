@@ -28,7 +28,7 @@ export const HomeHeaderTabs = () => {
                     backgroundColor: colors.background
                 },
                 tabBarIndicatorStyle: {
-                    backgroundColor: "#00A975"
+                    backgroundColor: "#B4D4FF"
                 },
                 tabBarActiveTintColor: colors.primary
             }}>

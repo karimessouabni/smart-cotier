@@ -59,8 +59,8 @@ const DarkTheme: CustomColors = {
     dark: true,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#72fe14',
-        secondary: '#52CB01',
+        primary: '#00A9FF',
+        secondary: '#75C2F6',
         background: '#101a2b',
         background2: '#1e293c',
         text: '#FFFFFF',
@@ -77,7 +77,7 @@ const DarkTheme: CustomColors = {
         closedHeaderGradientLeft: 'hsla(275, 100%, 85%, 0)',
         closedHeaderGradientRight: 'hsla(275, 100%, 85%, 0)',
         closedHeaderGradientCenter: 'hsla(275, 100%, 85%, 0)',
-        switchOn: '#5dd39e',
+        switchOn: '#72fe14',
         switchOff: '#A80900'
     }
 }

@@ -120,7 +120,7 @@ class UserService {
                 await updateDoc(chapterProgressRef, {
                     progress: increment(-1)
                 });
-                console.log("increaseChapterProgression -1 ✅")
+                console.log("decreaseChapterProgression -1 ✅")
             }
 
         } catch (e) {

@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
 import Markdown from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import UserService from '../services/UserService';
 import { Lesson, Progress } from 'types';
 
 import { useTheme } from '@react-navigation/native'
+import { Center, HStack } from 'native-base';
 
 
 export type LearningCardProps = {
@@ -20,22 +21,29 @@ export type LearningCardProps = {
 export default function LearningCard({ route, navigation }: any) {
     const { lesson, chapterId, lessonProgress }: LearningCardProps = route.params
     const carousel = useRef(null);
-    const [firstText, setFirstText] = useState<String>("")
     const { colors } = useTheme()
 
 
     useEffect(() => {
         const updateHeaderOptions = () => {
             navigation.setOptions({
-                headerRight: () => (
-                    lessonProgress === Progress.COMPLETED ?
-                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => restartChapter()}>
-                            <MaterialCommunityIcons color={colors.primary} size={25} name={'restart'} />
+                headerRight: () => (<>
+                    {lessonProgress === Progress.COMPLETED ?
+                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>
+                            <HStack >
+                                <Text style={{ paddingTop: 4 }} text90BL color={colors.text}>Réouvrir </Text>
+                                <MaterialCommunityIcons color={colors.text} size={25} name={'restart'} />
+                            </HStack>
                         </TouchableOpacity>
                         :
-                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => finishChapter()}>
-                            <MaterialCommunityIcons color={colors.primary} size={25} name={'check-all'} />
-                        </TouchableOpacity>
+                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoFinish()}>
+                            <HStack >
+                                <Text style={{ paddingTop: 4 }} text90BL color={colors.switchOn}>Terminer </Text>
+                                <MaterialCommunityIcons color={colors.switchOn} size={25} name={'check-all'} />
+                            </HStack>
+                        </TouchableOpacity>}
+
+                </>
                 )
             })
         }
@@ -44,7 +52,52 @@ export default function LearningCard({ route, navigation }: any) {
     }, [navigation])
 
 
+    const showConfirmationDialogFoReset = () => {
+        Alert.alert(
+            "Rouvrir le chapitre",
+            "Êtes-vous sûr de vouloir rouvrir ce chapitre ?",
+            [
+                // Bouton "Non"
+                {
+                    text: "Non",
+                    onPress: () => console.log("Action annulée"),
+                    style: "cancel"
+                },
+                // Bouton "Oui"
+                {
+                    text: "Oui",
+                    onPress: () => restartChapter()
+                }
+            ],
+            { cancelable: true }
+        );
+    }
+
+    const showConfirmationDialogFoFinish = () => {
+        Alert.alert(
+            "Confirmer la fin du chapitre",
+            "Êtes-vous sûr de vouloir marquer ce chapitre comme terminé ?",
+            [
+                // Bouton "Non"
+                {
+                    text: "Non",
+                    onPress: () => console.log("Action annulée"),
+                    style: "cancel"
+                },
+                // Bouton "Oui"
+                {
+                    text: "Oui",
+                    onPress: () => finishChapter()
+                }
+            ],
+            { cancelable: true }
+        );
+    }
+
+
+
     const finishChapter = async () => {
+        console.log("teminien")
         await UserService.updateLessonProgression({ chapterId: chapterId, lessonId: lesson.id, progress: Progress.COMPLETED })
         await UserService.increaseChapterProgression(chapterId)
 
@@ -96,7 +149,6 @@ export default function LearningCard({ route, navigation }: any) {
                 {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
                     <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
                         <Image
-                            overlayType={Image.overlayTypes.BOTTOM}
                             style={{ position: 'absolute', width: '100%', height: '100%' }}
                             source={{
                                 uri: uri

@@ -12,6 +12,7 @@ import WavesNight from '../assets/svgs/waves-night.svg'
 import HomeScreen from '../screens/HomeScreen';
 import QuizScreen from '../screens/QuizScreen';
 import { HomeHeaderTabs } from './HomeHeaderTabs';
+import SettingsScreen from 'screens/settings/SettingsScreen';
 
 
 
@@ -59,9 +60,9 @@ export function BottomTabNavigator() {
 
             <BottomTab.Screen
                 name="store"
-                component={HomeScreen}
+                component={SettingsScreen}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                     tabBarIcon: ({ focused }) => <MaterialCommunityIcons color={tabIconColor(focused)} size={25} name={focused ? 'account' : 'account-outline'} />
                 }}
             />

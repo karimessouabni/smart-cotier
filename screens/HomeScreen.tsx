@@ -60,7 +60,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                                 {chapter.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
-                                <MaterialIcons name="keyboard-arrow-right" size={24} color={Colors.green10} />
+                                <MaterialIcons name="keyboard-arrow-right" size={24} color={colors.primary} />
                             </View>
                         </ListItem.Part>
                         <ListItem.Part>
@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                                 backgroundColor={Colors.green80}
                                 progress={chapter.progress / chapter.nbrLesson * 100}
                                 duration={1600}
-                                containerStyle={{ backgroundColor: "#15be53", height: 2 }}
+                                containerStyle={{ backgroundColor: colors.primary, height: 2 }}
                             />
                         </View>
                     </ListItem.Part>

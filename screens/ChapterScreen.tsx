@@ -83,9 +83,7 @@ export default function ChapterScreen({ route, navigation }: any) {
                     activeBackgroundColor={Colors.grey20}
                     activeOpacity={0.3}
                     height={77.5}
-                    onPress={() => navigation.navigate('LearningCard', { chapterId: chapterId, lesson: lesson, lessonProgress: getLessonProgress(lesson.id) })}
-
-                >
+                    onPress={() => navigation.navigate('LearningCard', { chapterId: chapterId, lesson: lesson, lessonProgress: getLessonProgress(lesson.id) })} >
 
                     <ListItem.Part left >
                         <RadioButton containerStyle={{ margin: 10 }} selected={checkLessonProgress(lesson.id)} color={colors.primary} size={18} />
@@ -97,7 +95,7 @@ export default function ChapterScreen({ route, navigation }: any) {
                                 {lesson.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
-                                <MaterialIcons name="keyboard-arrow-right" size={24} color="#15be53" />
+                                <MaterialIcons name="keyboard-arrow-right" size={24} color={colors.primary} />
                             </View>
                         </ListItem.Part>
                         <ListItem.Part>

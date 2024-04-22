@@ -70,6 +70,7 @@ export default function QuizScreen({ route, navigation }: any) {
 
             {quizTabOf2.map((quiz, index) =>
                 <Pressable
+                    key={index}
                     flex={1} borderRadius="md"
                     borderWidth={0}
                     paddingRight={index % 2 == 0 ? 10 : 0}
@@ -83,7 +84,9 @@ export default function QuizScreen({ route, navigation }: any) {
                                         contentInset={{ top: 20, bottom: 20 }}
                                         data={quiz.userRate.length > 1 ? quiz.userRate : [0, 0]}
                                         numberOfTicks={0}
+                                        curve={shape.curveNatural}
                                         svg={{ stroke: colors.primary }}
+
                                     />
                                 </AspectRatio>
                                 <Center bg="green.200" _text={{
