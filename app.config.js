@@ -5,8 +5,8 @@ config()
 
 module.exports = {
     expo: {
-        name: 'CotierPro',
-        slug: 'CotierPro',
+        name: 'smartcotier',
+        slug: 'smartcotier',
         owner: 'ekitlab',
         version: '1.0.0',
         orientation: 'portrait',
@@ -33,7 +33,12 @@ module.exports = {
             // googleServicesFile: './GoogleService-Info.plist',
             usesAppleSignIn: true,
             supportsTablet: true,
-            bundleIdentifier: 'com.ekit.app.prod'
+            bundleIdentifier: 'com.ekit.app.prod',
+            infoPlist: {
+                UIBackgroundModes: [
+                    "audio"
+                ]  
+      }
         },
         android: {
             package: 'com.ekit.app.prod',

@@ -81,6 +81,11 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
                         <Stack.Screen name="QuizScreen" component={QuizScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card' })} />
                         <Stack.Screen name="Contact" component={Contact} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'card' })} />
                         <Stack.Screen name="BugSignal" component={BugSignal} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'modal', headerTitle: 'Signalez un bug' })} />
+                        <Stack.Screen name="Subscription" component={Contact} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'modal', headerTitle: 'Signalez un bug' })} />
+                        <Stack.Screen name="Notification" component={Contact} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'modal', headerTitle: 'Signalez un bug' })} />
+                        <Stack.Screen name="UsersAndPermissions" component={Contact} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, presentation: 'modal', headerTitle: 'Signalez un bug' })} />
+
+
 
                         <Stack.Screen name="QcmComonent" component={QcmScreen} options={({ route }) => ({ gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
                         <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />

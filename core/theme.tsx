@@ -31,8 +31,8 @@ const LightTheme: CustomColors = {
     dark: false,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#72fe14',
-        secondary: '#52CB01',
+        primary: '#00a8ae',//'#72fe14',
+        secondary: '#00d2da',
         background: '#FFFFFF',
         text: 'rgb(17, 24, 39)',
         background2: '#E2E2E2',
@@ -49,7 +49,7 @@ const LightTheme: CustomColors = {
         closedHeaderGradientLeft: 'hsla(275, 100%, 85%, 0.7)',
         closedHeaderGradientRight: 'hsla(275, 100%, 85%, 0.2)',
         closedHeaderGradientCenter: 'hsla(275, 100%, 85%, 0.2)',
-        switchOn: '#5dd39e',
+        switchOn: '#72fe14',
         switchOff: '#A80900'
     }
 }
@@ -59,9 +59,9 @@ const DarkTheme: CustomColors = {
     dark: true,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#00A9FF',
-        secondary: '#75C2F6',
-        background: '#101a2b',
+        primary: '#00a8ae',//'#72fe14',
+        secondary: '#00d2da',
+        background: '#11151c',
         background2: '#1e293c',
         text: '#FFFFFF',
         text2: '#DADDE2',

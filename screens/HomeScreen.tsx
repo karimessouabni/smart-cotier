@@ -96,9 +96,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
             renderItem={({ item, index }) => renderRow(item, index)}
             keyExtractor={keyExtractor}
             contentContainerStyle={styles.scrollView}
-            refreshControl={
-                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-            } />
+        />
     );
 }
 

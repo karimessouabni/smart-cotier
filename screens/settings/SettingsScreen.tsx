@@ -14,23 +14,24 @@ import tw from 'twrnc'
 
 const data = [
     {
-        fullName: 'Compte et réglages',
-        recentText: 'Gérer les utilisateurs et les accès',
+        fullName: 'Paramètres du Profil',
+        recentText: 'Gérez votre identité et vos coordonnées',
         navigation: 'UsersAndPermissions',
         icoName: 'people-sharp'
     },
 
+
     {
-        fullName: 'Abonnement',
-        recentText: 'Ajouter vos réseaux sociaux',
-        navigation: 'SocialAccountScreen',
+        fullName: 'Abonnements',
+        recentText: 'Modifiez ou renouvelez vos options',
+        navigation: 'Subscription',
         icoName: 'flash'
     },
 
     {
-        fullName: 'Notifications',
-        recentText: 'Notifications et alertes',
-        navigation: 'NotificationsAndAlerts',
+        fullName: 'Vos Statistiques',
+        recentText: 'Lacunes et points forts',
+        navigation: 'Notification',
         icoName: 'notifications-sharp'
     },
     {

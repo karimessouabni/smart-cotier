@@ -2,13 +2,15 @@ import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
-import Markdown from 'react-native-markdown-display';
+import Markdown, { MarkdownIt } from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserService from '../services/UserService';
 import { Lesson, Progress } from 'types';
 
 import { useTheme } from '@react-navigation/native'
-import { Center, HStack } from 'native-base';
+import { Button, Center, HStack } from 'native-base';
+import MusicPlayer from './MusicPlayer';
+import TrackPlayer, { Capability } from 'react-native-track-player';
 
 
 export type LearningCardProps = {
@@ -22,28 +24,83 @@ export default function LearningCard({ route, navigation }: any) {
     const { lesson, chapterId, lessonProgress }: LearningCardProps = route.params
     const carousel = useRef(null);
     const { colors } = useTheme()
+    const [fontSize, setFontSize] = useState(0);
 
+
+    const setupPlayer = async () => {
+        try {
+            await TrackPlayer.setupPlayer();
+            await TrackPlayer.updateOptions({
+
+                capabilities: [
+                    Capability.Play,
+                    Capability.Pause,
+                    Capability.SkipToNext,
+                    Capability.SkipToPrevious
+                ],
+            });
+            const track1 = {
+                url: 'https://audiocdn.epidemicsound.com/ES_ITUNES/h8jx0H_18%20Karat/ES_18%20Karat.mp3',
+                title: 'Avaritia',
+                artist: 'deadmau5',
+                album: 'while(1<2)',
+                genre: 'Progressive House, Electro House',
+                date: '2014-05-20T07:00:00+00:00', // RFC 3339
+                artwork: 'http://example.com/cover.png', // Load artwork from the network
+                duration: 402 // Duration in seconds
+            };
+
+            await TrackPlayer.add(track1);
+            await TrackPlayer.play();
+
+        } catch (error) {
+            console.log(error)
+            TrackPlayer.play();
+        }
+    };
+
+    useEffect(() => {
+        TrackPlayer.reset();
+
+        const track1 = {
+            url: 'https://audiocdn.epidemicsound.com/ES_ITUNES/h8jx0H_18%20Karat/ES_18%20Karat.mp3',
+            title: 'Avaritia',
+            artist: 'deadmau5',
+            album: 'while(1<2)',
+            genre: 'Progressive House, Electro House',
+            date: '2014-05-20T07:00:00+00:00', // RFC 3339
+            artwork: 'http://example.com/cover.png', // Load artwork from the network
+            duration: 402 // Duration in seconds
+        };
+        // TrackPlayer.add(track1);
+        // TrackPlayer.play();
+    }, []);
 
     useEffect(() => {
         const updateHeaderOptions = () => {
             navigation.setOptions({
-                headerRight: () => (<>
-                    {lessonProgress === Progress.COMPLETED ?
-                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>
-                            <HStack >
-                                <Text style={{ paddingTop: 4 }} text90BL color={colors.text}>Réouvrir </Text>
-                                <MaterialCommunityIcons color={colors.text} size={25} name={'restart'} />
-                            </HStack>
-                        </TouchableOpacity>
-                        :
-                        <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoFinish()}>
-                            <HStack >
-                                <Text style={{ paddingTop: 4 }} text90BL color={colors.switchOn}>Terminer </Text>
-                                <MaterialCommunityIcons color={colors.switchOn} size={25} name={'check-all'} />
-                            </HStack>
-                        </TouchableOpacity>}
+                headerRight: () => (
+                    <HStack >
+                        <Button.Group isAttached size="xs" pr={2} >
+                            <Button onPress={() => setFontSize(prev => prev - 1)}>a</Button>
+                            <Button onPress={() => setFontSize(prev => prev + 1)} variant="subtle">A</Button>
+                        </Button.Group>
+                        {lessonProgress === Progress.COMPLETED ?
+                            <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>
+                                <HStack >
+                                    <Text style={{ paddingTop: 4 }} text90BL color={colors.text}>Réouvrir </Text>
+                                    <MaterialCommunityIcons color={colors.text} size={25} name={'restart'} />
+                                </HStack>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoFinish()}>
+                                <HStack >
+                                    <Text style={{ paddingTop: 4 }} text90BL color={colors.switchOn}>Terminer </Text>
+                                    <MaterialCommunityIcons color={colors.switchOn} size={25} name={'check-all'} />
+                                </HStack>
+                            </TouchableOpacity>}
+                    </HStack>
 
-                </>
                 )
             })
         }
@@ -129,11 +186,16 @@ export default function LearningCard({ route, navigation }: any) {
             <Text text30M color={colors.primary} margin-15>{lesson.name}</Text>
 
             {/* <Text grey10 text70L margin-15> */}
-            <Markdown style={{
-                body: { color: colors.text, paddingHorizontal: 15 },
-                heading3: { color: colors.secondary, fontFamily: 'poppinsm', paddingTop: 20, paddingBottom: 5 },
-                code_block: { color: colors.text, fontSize: 14 }
-            }}>
+
+            <Markdown
+                markdownit={
+                    MarkdownIt({ typographer: true })
+                }
+                style={{
+                    body: { color: colors.text, fontSize: 14 + fontSize, paddingHorizontal: 15 },
+                    heading3: { color: colors.secondary, fontFamily: 'poppinsm', paddingTop: 20, paddingBottom: 5 },
+                    code_block: { color: colors.text, fontSize: 14 + fontSize }
+                }}>
                 {`${formatStr()}`}
 
             </Markdown>
