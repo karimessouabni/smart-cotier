@@ -56,6 +56,7 @@ export type Answer = {
 }
 
 export type UserQuizResult = {
+    chapterId?: string;
     quizId: string;
     createdDate: Timestamp;
     rate: number;

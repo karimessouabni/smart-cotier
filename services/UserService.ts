@@ -7,7 +7,10 @@ import { limit, } from 'firebase/firestore';
 class UserService {
     async saveUserQuizResult(userQuizResult: UserQuizResult) {
         try {
-            const userQuizResultRes = await addDoc(collection(db, `users/${auth.currentUser?.uid}/quiz/${userQuizResult.quizId}/scores`),
+
+            const path = userQuizResult.chapterId ? `users/${auth.currentUser?.uid}/chapters/${userQuizResult.chapterId}/quiz/${userQuizResult.quizId}/scores` : `users/${auth.currentUser?.uid}/quiz/${userQuizResult.quizId}/scores`
+
+            const userQuizResultRes = await addDoc(collection(db, path),
                 {
                     ...userQuizResult,
                     createdDate: Timestamp.now(),
@@ -28,8 +31,6 @@ class UserService {
                 const data = fbDoc.data() as UserQuizResult
                 return data.rate ? data.rate : 0
             })
-
-
 
         } catch (e) {
             console.error('Error on fetchAllProgressionOfLessons: ', e)

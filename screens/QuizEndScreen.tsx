@@ -11,6 +11,7 @@ import UserService from 'services/UserService';
 import { useTheme } from '@react-navigation/native'
 
 export type LessonScreenProps = {
+    chapterId?: string
     quiz: Quiz
     userQuizResult: UserQuizResult
     setIsQuizCompleted: any
@@ -26,7 +27,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
         "⚓️ Gardez votre cap ! La mer n'a pas été explorée en un jour. Prenez le temps de réviser et la prochaine fois, vous naviguerez vers la réussite.",
         "🚤 Félicitations pour tout le travail accompli jusqu'à présent ! Chaque examen blanc est une étape de plus vers votre objectif. Continuez ainsi, et vous verrez, la prochaine fois sera la bonne !",
         "🏆 Félicitations, futur capitaine ! Vous avez non seulement réussi, mais vous avez également prouvé que vous avez la discipline et la détermination nécessaires pour conquérir les mers."]
-    const { quiz, userQuizResult, setIsQuizCompleted }: LessonScreenProps = route.params
+    const { quiz, userQuizResult, setIsQuizCompleted, chapterId }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
     const [progressions, setProgressions] = useState<LessonProgression[]>([])
     const [lottieFinished, setLottieFinished] = useState(false);
@@ -63,7 +64,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
         calculateMsg(rate)
         rate < 87 && setAnnimationFailed(true)
 
-        UserService.saveUserQuizResult({ ...userQuizResult, rate: rate })
+        UserService.saveUserQuizResult({ ...userQuizResult, rate: rate, chapterId: chapterId })
     }, [])
 
     const onAnimationFinish = () => {
@@ -134,7 +135,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     <VStack space="4" >
                         <Box px="4" alignItems={'center'} >
                             <Heading color={colors.text} size='2xl' >
-                                Test blanc {quiz.order}
+                                {!chapterId && `Test blanc ${quiz.order}`}
                             </Heading>
                         </Box>
                         <Divider />
@@ -159,7 +160,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                                     Taux de réponses correctes :
                                 </Text>
                                 <Text text70 >
-                                    {userQuizResult && correctAnswerNbr / (wrongAnswerNbr + correctAnswerNbr) * 100}%
+                                    {(userQuizResult && correctAnswerNbr / (wrongAnswerNbr + correctAnswerNbr) * 100).toFixed(0)}%
                                 </Text>
                             </HStack>
                         </Box>
@@ -173,7 +174,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                                 shadowOffset: { width: 2, height: 2 },
                                 shadowRadius: 3,
 
-                            }} bg={colors.primary} alignItems={'center'} p={4} justifyContent={'space-between'} >
+                            }} bg={colors.switchOn} alignItems={'center'} p={4} justifyContent={'space-between'} >
                                 <Text text70  >
                                     Bonnes réponses :
                                 </Text>
@@ -221,7 +222,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                         }, {
                             value: correctAnswerNbr,
                             svg: {
-                                fill: colors.primary,
+                                fill: colors.switchOn,
                                 onPress: () => console.log('press green ', correctAnswerNbr),
                             },
                             key: `pie1`,
@@ -235,7 +236,7 @@ export default function QuizEndScreen({ route, navigation }: any) {
                     }} position="absolute" bottom="0" px="2" py="0.5">
                         ❌
                     </Center>
-                    <Center bg={colors.primary} _text={{
+                    <Center bg={colors.switchOn} _text={{
                         fontWeight: "300",
                         fontSize: "xs"
                     }} position="absolute" bottom="6" px="2" py="0.5">

@@ -35,7 +35,7 @@ const LightTheme: CustomColors = {
         secondary: '#00d2da',
         background: '#FFFFFF',
         text: 'rgb(17, 24, 39)',
-        background2: '#E2E2E2',
+        background2: '#1e293c',
         text2: '#7D8290',
         secondaryText: '#575c66',
         border: '#F19E9B',

@@ -75,7 +75,7 @@ export default function QuizScreen({ route, navigation }: any) {
                     borderWidth={0}
                     paddingRight={index % 2 == 0 ? 10 : 0}
                     style={{ shadowRadius: 0, shadowColor: Colors.grey10 }}
-                    onPress={() => navigation.navigate('QcmComonent', { quiz: quiz })}>
+                    onPress={() => navigation.navigate('QcmScreen', { quiz: quiz })}>
                     <Box alignItems="center">
                         <Box maxW="80" rounded="lg" shadow={1} backgroundColor={colors.inputBg}>
                             <Box>

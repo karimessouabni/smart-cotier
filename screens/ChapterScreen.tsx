@@ -3,42 +3,20 @@ import { StyleSheet, FlatList } from 'react-native';
 import { Colors, BorderRadiuses, View, ListItem, Text, RadioButton } from 'react-native-ui-lib';
 import { MaterialIcons } from '@expo/vector-icons';
 import LessonService from '../services/LessonService';
-import UserService from '../services/UserService';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { Lesson, LessonProgression, Progress } from 'types';
+import { useFocusEffect } from '@react-navigation/native';
+import { Lesson, LessonProgression, Progress, Quiz } from 'types';
 import { useTheme } from '@react-navigation/native'
 import ExpoInstaStory from 'expo-insta-story';
+import { Fab, Icon } from 'native-base';
+import UserService from '../services/UserService';
+import QuizService from 'services/QuizService';
+
 
 export type LessonScreenProps = {
     chapterId: string
     chapName: string
 }
 
-const data = [
-    {
-        id: 1,
-        avatar_image:
-            'https://firebasestorage.googleapis.com/v0/b/smart-cotier.appspot.com/o/Chapters%2Fsecuritemer%2F1.png?alt=media&token=988754cc-400e-48f4-8195-9cf02dea4ecd',
-        user_name: 'cours 1',
-        stories: [{ "duration": 10, "story": "https://firebasestorage.googleapis.com/v0/b/smart-cotier.appspot.com/o/Chapters%2Fintroduction%2F1.jpg?alt=media&token=6f9002a0-2238-4f1e-a58c-57412266e5dc", "story_id": 1 }, { "duration": 10, "story": "https://firebasestorage.googleapis.com/v0/b/smart-cotier.appspot.com/o/Chapters%2Fintroduction%2F2.jpg?alt=media&token=6f9002a0-2238-4f1e-a58c-57412266e5dc", "story_id": 2 }, { "duration": 10, "story": "https://firebasestorage.googleapis.com/v0/b/smart-cotier.appspot.com/o/Chapters%2Fintroduction%2F3.jpg?alt=media&token=6f9002a0-2238-4f1e-a58c-57412266e5dc", "story_id": 3 }],
-    },
-    {
-        id: 2,
-        avatar_image:
-            'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZmlsZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-        user_name: 'Test User',
-        stories: [
-            {
-                story_id: 1,
-                story:
-                    'https://firebasestorage.googleapis.com/v0/b/smart-cotier.appspot.com/o/Chapters%2Fsecuritemer%2F1.png?alt=media&token=988754cc-400e-48f4-8195-9cf02dea4ecd',
-                swipeText: 'Custom swipe text for this story',
-                onPress: () => console.log('story 1 swiped'),
-                duration: 10,
-            }
-        ],
-    },
-];
 
 type LessonStories = {
     id: number;
@@ -58,6 +36,7 @@ export default function ChapterScreen({ route, navigation }: any) {
     const { chapterId }: LessonScreenProps = route.params
     const [lessons, setLessons] = useState<Lesson[]>([])
     const [stories, setStories] = useState<LessonStories[]>([])
+    const [quiz, setQuiz] = useState<Quiz>()
 
     const [progressions, setProgressions] = useState<LessonProgression[]>([])
     const { colors } = useTheme()
@@ -88,8 +67,15 @@ export default function ChapterScreen({ route, navigation }: any) {
             setProgressions(fetchedChapProgres)
         }
 
-        fetchChapters();
-        fetchChapterProgression();
+        const fetchChapterQuiz = async () => {
+            const fetchedQuiz: Quiz | null = await QuizService.fetchQuizOfChapter(chapterId)
+            fetchedQuiz && setQuiz(fetchedQuiz)
+            console.log(fetchedQuiz)
+        }
+
+        fetchChapterQuiz()
+        fetchChapters()
+        fetchChapterProgression()
     }, [])
 
 
@@ -185,6 +171,13 @@ export default function ChapterScreen({ route, navigation }: any) {
                 renderItem={({ item, index }) => renderRow(item, index)}
                 keyExtractor={keyExtractor}
             />
+            <Fab backgroundColor={colors.secondary}
+                fontWeight={'bold'} renderInPortal={false} shadow={2}
+                placement="bottom-right" size="sm" marginBottom={10}
+                onPress={() => navigation.navigate('QcmScreen', { quiz: quiz, chapterId: chapterId })}
+                icon={<Icon color="white" as={MaterialIcons} name="sailing" size="4" />}
+                label="Lancer le Test" />
+
         </>
 
     );

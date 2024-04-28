@@ -82,8 +82,8 @@ export default function LearningCard({ route, navigation }: any) {
                 headerRight: () => (
                     <HStack >
                         <Button.Group isAttached size="xs" pr={2} >
-                            <Button onPress={() => setFontSize(prev => prev - 1)}>a</Button>
-                            <Button onPress={() => setFontSize(prev => prev + 1)} variant="subtle">A</Button>
+                            <Button onPress={() => setFontSize(prev => prev - 1)} variant="subtle">A-</Button>
+                            <Button onPress={() => setFontSize(prev => prev + 1)} >A+</Button>
                         </Button.Group>
                         {lessonProgress === Progress.COMPLETED ?
                             <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>

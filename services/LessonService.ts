@@ -6,7 +6,6 @@ import { Lesson } from 'types';
 class LessonService {
 
     fetchAllLessonOfChapter = async (chapterId: string) => {
-        console.log('fetching all chapter from Service')
         const q = query(this.getAllLessons(chapterId), orderBy('order'));
 
         const querySnapshot = await getDocs(q)

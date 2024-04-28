@@ -7,6 +7,7 @@ import { NativeBaseProvider } from 'native-base'
 import { TailwindProvider } from 'tailwind-rn'
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
+import { GlassfyProvider } from './providers/GlassfyProvider';
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
@@ -36,11 +37,13 @@ export default function App() {
   })
 
   return (
-    <TailwindProvider utilities={utilities}>
-      <NativeBaseProvider >
-        <Navigation loggedIn={loggedIn} />
-      </NativeBaseProvider>
-    </TailwindProvider>
+    <GlassfyProvider>
+      <TailwindProvider utilities={utilities}>
+        <NativeBaseProvider >
+          <Navigation loggedIn={loggedIn} />
+        </NativeBaseProvider>
+      </TailwindProvider>
+    </GlassfyProvider>
   );
 }
 

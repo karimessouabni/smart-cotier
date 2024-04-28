@@ -11,7 +11,7 @@ import { Alert } from 'react-native';
 
 
 export default function QcmScreen({ route, navigation }: any) {
-    const { quiz }: { quiz: Quiz } = route.params
+    const { quiz, chapterId }: { quiz: Quiz; chapterId?: string } = route.params
     const nextIcon = require('../assets/icons/next.png');
     const { colors } = useTheme()
 
@@ -56,7 +56,7 @@ export default function QcmScreen({ route, navigation }: any) {
 
     useEffect(() => {
         const fetcQcmList = async () => {
-            const fetchedQcmList = await QcmService.fetchAllQcm(quiz.id)
+            const fetchedQcmList = chapterId ? await QcmService.fetchAllCahpterQcm(chapterId) : await QcmService.fetchAllQcm(quiz.id)
             setQcmList(fetchedQcmList)
             setQcmOnScreen(fetchedQcmList[0])
             setQcmValidAnswerIds(fetchedQcmList[0]?.answers.filter(answer => answer.valid == true).map(answer => answer.id))
@@ -119,6 +119,7 @@ export default function QcmScreen({ route, navigation }: any) {
 
         if (qcmList[indexQcmOnScreen + 1]) {
             setQcmOnScreen(qcmList[indexQcmOnScreen + 1])
+            setQcmValidAnswerIds(qcmList[indexQcmOnScreen + 1]?.answers.filter(answer => answer.valid == true).map(answer => answer.id))
             setIndexQcmOnScreen(prev => ++prev)
         }
     }
@@ -129,7 +130,7 @@ export default function QcmScreen({ route, navigation }: any) {
         console.log({ ...userQuizResult })
         console.log(userQuizResult.answeredQcm)
         navigation.navigate('QuizEndScreen', {
-            quiz: quiz, userQuizResult: userQuizResult, setIsQuizCompleted: setIsQuizCompleted
+            quiz: quiz, userQuizResult: userQuizResult, setIsQuizCompleted: setIsQuizCompleted, chapterId: chapterId
         })
     }
 
@@ -142,30 +143,30 @@ export default function QcmScreen({ route, navigation }: any) {
                 <View flex>
                     <View paddingL-40 marginB-20>
                         <AnimatedScanner
-                            backgroundColor={colors.secondaryText}
+                            backgroundColor={"#a5a5a5"}
                             progress={(indexQcmOnScreen + 1) / qcmList.length * 100}
                             duration={1600}
-                            containerStyle={{ backgroundColor: colors.primary, height: 6 }}
+                            containerStyle={{ backgroundColor: colors.secondary, height: 6 }}
                         />
                     </View>
 
                     <Card containerStyle={{ marginBottom: 15, backgroundColor: colors.background2 }} >
-                        <Card.Image height={250} source={{ uri: qcmOnScreen.img }} />
+                        {qcmOnScreen.img && <Card.Image height={250} source={{ uri: qcmOnScreen.img }} />}
                         <View padding-20>
-                            <Text text40 color={colors.text}>
+                            <Text text40 color={"#FFFFFF"}>
                                 Question {indexQcmOnScreen + 1}
                             </Text>
-                            {/* {correctAnswer && <Text text50 color={Colors.green30}>Bonne réponse</Text>} */}
-                            <Text text70M color={colors.text2}>
+                        </View>
+                        <View paddingH-20 paddingB-20>
+                            <Text text70M color={"#DADDE2"}>
                                 {qcmOnScreen.question}
                             </Text>
-
-                            <Text text90 color={Colors.grey40}>
-                                Sélectionner jusqu'a deux réponses
-                            </Text>
-
                         </View>
-
+                        <View paddingH-20>
+                            <Text text90 color={Colors.grey40}>
+                                Sélectionner une ou plusieurs réponses
+                            </Text>
+                        </View>
                         {animatedScreen && <AnimatedScanner
                             opacity={0.7}
                             progress={100}
@@ -188,9 +189,9 @@ export default function QcmScreen({ route, navigation }: any) {
                                                 errorMessage ? Colors.white : Colors.$textDefault, fontWeight: qcmUserAnswerIds.includes(answer.id) ? '500' : 'normal'
                                         }}
                                         containerStyle={{
-                                            shadowColor: isGreenStyle ? colors.primary :
+                                            shadowColor: isGreenStyle ? colors.switchOn :
                                                 Colors.grey70,
-                                            borderColor: isGreenStyle ? colors.primary :
+                                            borderColor: isGreenStyle ? colors.switchOn :
                                                 Colors.grey70,
                                             borderEndEndRadius: 20,
                                             borderWidth: 0.2,
@@ -206,7 +207,7 @@ export default function QcmScreen({ route, navigation }: any) {
                                         label={answer.text}
                                         color={!qcmValidAnswerIds.includes(answer.id) &&
                                             answerIsClicked &&
-                                            errorMessage ? Colors.white : isGreenStyle ? colors.secondary : Colors.$textDefault}
+                                            errorMessage ? Colors.white : isGreenStyle ? colors.switchOn : Colors.$textDefault}
                                         iconColor={
                                             !qcmValidAnswerIds.includes(answer.id) &&
                                                 answerIsClicked &&
@@ -216,17 +217,17 @@ export default function QcmScreen({ route, navigation }: any) {
                             })
                             }
                             <View row spread>
-                                <Button text90 link label="Signalez un Bug" onPress={() => navigation.navigate("BugSignal", { qcmId: qcmOnScreen.id })} />
+                                <Button paddingB-10 color="#00d2da" text90 link label="Signalez un Bug 🛟" onPress={() => navigation.navigate("BugSignal", { qcmId: qcmOnScreen.id })} />
                             </View>
                         </View>
 
-                        {errorMessage && <Text margin-20 text90 color={Colors.red30}>
+                        {errorMessage && <Text margin-20 text90 color={colors.red}>
                             {errorMessage}
                         </Text>}
 
-                        <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={colors.text2} />
+                        <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={"#DADDE2"} />
 
-                        <Text center style={{ padding: 5, color: colors.text2 }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
+                        <Text center style={{ padding: 5, color: "#DADDE2" }}>{indexQcmOnScreen + 1}/{qcmList.length}</Text>
 
 
                     </Card>
@@ -238,7 +239,7 @@ export default function QcmScreen({ route, navigation }: any) {
                 <Button onPress={validated ? qcmList.length == indexQcmOnScreen + 1 ? terminateQcm : goToNextQcm : validateQcm}
                     borderRadius={5}
                     disabled={qcmUserAnswerIds.length == 0}
-                    backgroundColor={colors.primary}
+                    backgroundColor={colors.secondary}
                     iconOnRight
                     iconSource={validated && nextIcon}
                     marginH-10

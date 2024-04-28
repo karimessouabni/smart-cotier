@@ -6,7 +6,6 @@ import { Chapter, ChapterProgress } from 'types';
 class ChapterService {
 
     fetchAllChapters = async () => {
-        console.log('fetching all chapter from Service')
         const q = query(collection(db, 'chapters/'), orderBy('order'));
         const querySnapshot = await getDocs(q)
         return querySnapshot.docs.map((fbDoc) => {

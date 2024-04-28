@@ -23,7 +23,7 @@ module.exports = {
             backgroundColor: '#ffffff'
         },
         updates: {
-            url: 'https://u.expo.dev/26878654-2083-4a67-896b-c29b97536c06'
+            url: "https://u.expo.dev/4ea74c36-0204-40ba-9776-548bc7ed3fb4"
         },
         runtimeVersion: {
             policy: 'sdkVersion'

@@ -5,7 +5,6 @@ import { db } from '../firebase'
 class LearningCardService {
 
     fetchFirstText = async (chapterId: string, lessonId: string) => {
-        console.log('fetching all chapter from Service')
         const q = query(this.getFirstText(chapterId, lessonId))
         const querySnapshot = await getDocs(q)
         return querySnapshot.docs.map((fbDoc) => {
