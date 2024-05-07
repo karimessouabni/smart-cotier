@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                                 backgroundColor={Colors.green80}
                                 progress={chapter.progress / chapter.nbrLesson * 100}
                                 duration={1600}
-                                containerStyle={{ backgroundColor: colors.primary, height: 2 }}
+                                containerStyle={chapter.progress / chapter.nbrLesson * 100 == 100 ? { backgroundColor: "#80ed99", height: 2 } : { backgroundColor: colors.primary, height: 2 }}
                             />
                         </View>
                     </ListItem.Part>

@@ -25,7 +25,7 @@ export function BottomTabNavigator() {
 
     const headerRestoOpen = () => {
         return (
-            <View style={{ marginTop: -150 }}>
+            <View style={{ marginTop: -120 }}>
                 {dark ? < WavesNight style={{
                 }} width={"100%"} height={250} /> : < Waves style={{
                 }} width={"100%"} height={250} />}

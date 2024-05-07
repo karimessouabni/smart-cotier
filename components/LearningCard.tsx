@@ -11,6 +11,8 @@ import { useTheme } from '@react-navigation/native'
 import { Button, Center, HStack } from 'native-base';
 import MusicPlayer from './MusicPlayer';
 import TrackPlayer, { Capability } from 'react-native-track-player';
+import GradientText from '../providers/GradientText';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export type LearningCardProps = {
@@ -80,26 +82,38 @@ export default function LearningCard({ route, navigation }: any) {
         const updateHeaderOptions = () => {
             navigation.setOptions({
                 headerRight: () => (
-                    <HStack >
-                        <Button.Group isAttached size="xs" pr={2} >
-                            <Button onPress={() => setFontSize(prev => prev - 1)} variant="subtle">A-</Button>
-                            <Button onPress={() => setFontSize(prev => prev + 1)} >A+</Button>
-                        </Button.Group>
-                        {lessonProgress === Progress.COMPLETED ?
-                            <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>
-                                <HStack >
-                                    <Text style={{ paddingTop: 4 }} text90BL color={colors.text}>Réouvrir </Text>
-                                    <MaterialCommunityIcons color={colors.text} size={25} name={'restart'} />
-                                </HStack>
-                            </TouchableOpacity>
-                            :
-                            <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoFinish()}>
-                                <HStack >
-                                    <Text style={{ paddingTop: 4 }} text90BL color={colors.switchOn}>Terminer </Text>
-                                    <MaterialCommunityIcons color={colors.switchOn} size={25} name={'check-all'} />
-                                </HStack>
-                            </TouchableOpacity>}
-                    </HStack>
+
+                    <LinearGradient
+                        colors={["#00A0F4", "#00D6DF"]}
+                        start={{ x: 0, y: 0 }}
+                        end={{ x: 1, y: 0 }}>
+                        <HStack>
+                            <Button.Group isAttached size="xs" pr={10} >
+
+
+                                <Button pr={5} onPress={() => setFontSize(prev => prev - 1)} backgroundColor={'transparent'} >A-</Button>
+                                <Button onPress={() => setFontSize(prev => prev + 1)} backgroundColor={'transparent'} >A+</Button>
+
+
+                            </Button.Group>
+
+                            {lessonProgress === Progress.COMPLETED ?
+                                <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoReset()}>
+                                    <HStack >
+                                        <Text style={{ paddingTop: 8 }} text90BL color={'white'}>Réouvrir </Text>
+                                        <MaterialCommunityIcons style={{ paddingTop: 6 }} color={'white'} size={20} name={'restart'} />
+                                    </HStack>
+                                </TouchableOpacity>
+                                :
+                                <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => showConfirmationDialogFoFinish()}>
+                                    <HStack >
+                                        <Text style={{ paddingTop: 8 }} text90BL color={'white'}>Terminer </Text>
+                                        <MaterialCommunityIcons color={'white'} size={25} name={'check-all'} />
+                                    </HStack>
+                                </TouchableOpacity>}
+
+                        </HStack>
+                    </LinearGradient>
 
                 )
             })
@@ -183,18 +197,15 @@ export default function LearningCard({ route, navigation }: any) {
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
-            <Text text30M color={colors.primary} margin-15>{lesson.name}</Text>
-
-            {/* <Text grey10 text70L margin-15> */}
-
+            <GradientText text={lesson.name} />
             <Markdown
                 markdownit={
                     MarkdownIt({ typographer: true })
                 }
                 style={{
                     body: { color: colors.text, fontSize: 14 + fontSize, paddingHorizontal: 15 },
-                    heading3: { color: colors.secondary, fontFamily: 'poppinsm', paddingTop: 20, paddingBottom: 5 },
-                    code_block: { color: colors.text, fontSize: 14 + fontSize }
+                    heading3: { color: colors.secondary, fontFamily: 'centraleSansB', paddingTop: 20, paddingBottom: 5 },
+                    code_block: { color: colors.text, fontSize: 14 + fontSize, fontFamily: 'centraleSansB' }
                 }}>
                 {`${formatStr()}`}
 
@@ -206,7 +217,7 @@ export default function LearningCard({ route, navigation }: any) {
                 ref={carousel}
                 pageWidth={getWidth()}
                 itemSpacings={Spacings.s3}
-                containerStyle={{ paddingTop: 20, height: 460, width: 400 }}
+                containerStyle={{ paddingTop: 20, height: 410, width: 420 }}
                 pageControlPosition={Carousel.pageControlPositions.UNDER}>
                 {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
                     <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>

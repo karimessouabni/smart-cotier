@@ -8,6 +8,7 @@ import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
 import { useTheme } from '@react-navigation/native'
 import ConfirmationAlert from '../components/styled/ConfirmationAlert';
 import { Alert } from 'react-native';
+import { HStack } from 'native-base';
 
 
 export default function QcmScreen({ route, navigation }: any) {
@@ -104,7 +105,7 @@ export default function QcmScreen({ route, navigation }: any) {
         if (rightResponse) {
             setCorrectAnswer(true)
         } else {
-            setErrorMessage(`Mauvaise réponse ${qcmOnScreen?.explain ? " : " + qcmOnScreen?.explain : ""}`)
+            setErrorMessage(`${qcmOnScreen?.explain ? qcmOnScreen?.explain : ""}`)
         }
     }
 
@@ -114,7 +115,7 @@ export default function QcmScreen({ route, navigation }: any) {
         setValidated(false)
         setCorrectAnswer(false)
         setErrorMessage("")
-        setQcmUserAnswerIds([])
+        setQcmUserAnswerIds(prev => [])
         setAnimatedScreen(false)
 
         if (qcmList[indexQcmOnScreen + 1]) {
@@ -150,20 +151,20 @@ export default function QcmScreen({ route, navigation }: any) {
                         />
                     </View>
 
-                    <Card containerStyle={{ marginBottom: 15, backgroundColor: colors.background2 }} >
+                    <Card containerStyle={{ marginBottom: 15, backgroundColor: "#F9FAFB" }} >
                         {qcmOnScreen.img && <Card.Image height={250} source={{ uri: qcmOnScreen.img }} />}
                         <View padding-20>
-                            <Text text40 color={"#FFFFFF"}>
+                            <Text text40 color={colors.background2}>
                                 Question {indexQcmOnScreen + 1}
                             </Text>
                         </View>
                         <View paddingH-20 paddingB-20>
-                            <Text text70M color={"#DADDE2"}>
+                            <Text text70M color={colors.text}>
                                 {qcmOnScreen.question}
                             </Text>
                         </View>
                         <View paddingH-20>
-                            <Text text90 color={Colors.grey40}>
+                            <Text text90 color={colors.text2}>
                                 Sélectionner une ou plusieurs réponses
                             </Text>
                         </View>
@@ -221,9 +222,14 @@ export default function QcmScreen({ route, navigation }: any) {
                             </View>
                         </View>
 
-                        {errorMessage && <Text margin-20 text90 color={colors.red}>
-                            {errorMessage}
-                        </Text>}
+                        {errorMessage && (<>
+                            <Text marginH-20 marginT-20 text90 color={colors.red}>
+                                {`Mauvaise réponse :`}
+                            </Text>
+                            <Text marginH-20 marginT-5 marginB-20 text90 color={colors.text}>
+                                {errorMessage}
+                            </Text>
+                        </>)}
 
                         <PageControl numOfPages={qcmList.length} currentPage={indexQcmOnScreen} color={"#DADDE2"} />
 

@@ -31,8 +31,8 @@ const LightTheme: CustomColors = {
     dark: false,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#00a8ae',//'#72fe14',
-        secondary: '#00d2da',
+        primary: '#00A0F4',//'#72fe14',
+        secondary: '#00BEF8',
         background: '#FFFFFF',
         text: 'rgb(17, 24, 39)',
         background2: '#1e293c',
@@ -59,8 +59,8 @@ const DarkTheme: CustomColors = {
     dark: true,
     colors: {
         ...DefaultTheme.colors,
-        primary: '#00a8ae',//'#72fe14',
-        secondary: '#00d2da',
+        primary: '#00A0F4',//'#72fe14',
+        secondary: '#1CB9D3',
         background: '#11151c',
         background2: '#1e293c',
         text: '#FFFFFF',

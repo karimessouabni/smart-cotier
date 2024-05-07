@@ -87,7 +87,7 @@ function RootNavigator({ loggedIn }: { loggedIn: boolean }) {
 
 
 
-                        <Stack.Screen name="QcmScreen" component={QcmScreen} options={({ route }) => ({ gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
+                        <Stack.Screen name="QcmScreen" component={QcmScreen} options={({ route }) => ({ gestureEnabled: false, cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: route.params.chapterId ? 'Quiz' : 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
                         <Stack.Screen name="QuizEndScreen" component={QuizEndScreen} options={({ route }) => ({ cardStyle: { backgroundColor: colors.background }, headerShown: true, headerTitle: route.params.chapterId ? 'Quiz' : 'Quiz numéro : ' + route.params.quiz.order, presentation: 'card' })} />
 
                     </>

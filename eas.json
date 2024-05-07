@@ -11,11 +11,30 @@
                 "simulator": true
             }
         },
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal",
+            "env": {
+                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+            }
+        },
         "development-simulator": {
             "channel": "development-simulator",
             "extends": "fast",
             "env": {
-                "APP_VARIANT": "dev"
+                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
             }
         },
         "production-simulator": {

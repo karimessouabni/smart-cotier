@@ -17,6 +17,9 @@ export default function App() {
     poppins: require('./assets/fonts/poppins-light.ttf'),
 
     poppinsm: require('./assets/fonts/Poppins-Medium.ttf'),
+    'centraleSansB': require('./assets/fonts/CentraleSansB.woff2.ttf'),
+    'montserrat': require('./assets/fonts/Montserrat.ttf'),
+
     'circular-std': require('./assets/fonts/circular-std-medium-500.ttf')
   })
 
