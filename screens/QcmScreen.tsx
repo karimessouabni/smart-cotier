@@ -1,14 +1,13 @@
 import _ from 'lodash';
-import { ScrollView } from "react-native-gesture-handler";
 import { Card, View, Text, Button, AnimatedScanner, Colors, PageControl, Checkbox, Assets, ExpandableSection } from "react-native-ui-lib";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import QcmService from "../services/QcmService";
 import { Quiz, Qcm, AnsweredQcm, UserQuizResult } from "types";
 import { useTheme } from '@react-navigation/native'
 import ConfirmationAlert from '../components/styled/ConfirmationAlert';
-import { Alert } from 'react-native';
-import { HStack } from 'native-base';
+import { Alert, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { HStack, Pressable } from 'native-base';
 
 
 export default function QcmScreen({ route, navigation }: any) {
@@ -30,6 +29,7 @@ export default function QcmScreen({ route, navigation }: any) {
     const [qcmUserAnswerIds, setQcmUserAnswerIds] = useState<string[]>([])
     const [qcmValidAnswerIds, setQcmValidAnswerIds] = useState<string[]>([])
     const [isQuizCompleted, setIsQuizCompleted] = useState(false);
+    const scrollViewRef = useRef<ScrollView>(null);
 
 
     useEffect(() => {
@@ -74,6 +74,7 @@ export default function QcmScreen({ route, navigation }: any) {
 
 
     const checkUncheckAnswer = (id: string) => {
+
         if (!correctAnswer && !errorMessage) {
             setQcmUserAnswerIds(perv => {
                 return perv.includes(id) ? perv.filter(item => item !== id) : [...perv, id];
@@ -98,10 +99,21 @@ export default function QcmScreen({ route, navigation }: any) {
         } else {
             setErrorMessage(`${qcmOnScreen?.explain ? qcmOnScreen?.explain : ""}`)
         }
+
     }
 
+    useEffect(() => {
+
+        if (correctAnswer == false && errorMessage == "") {
+            scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+        } else {
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+        }
+
+    }, [correctAnswer, errorMessage]);
 
     const goToNextQcm = () => {
+
         // Reset Componenet state on next QCM Screen
         setValidated(false)
         setCorrectAnswer(false)
@@ -128,9 +140,8 @@ export default function QcmScreen({ route, navigation }: any) {
 
 
 
-    return (<>
-
-        <ScrollView showsVerticalScrollIndicator={false}>
+    return (
+        <ScrollView ref={scrollViewRef} showsVerticalScrollIndicator={false} >
             {qcmOnScreen && <View paddingB-40>
                 <View flex>
                     <View paddingL-40 marginB-20>
@@ -209,7 +220,7 @@ export default function QcmScreen({ route, navigation }: any) {
                             })
                             }
                             <View row spread>
-                                <Button paddingB-10 color="#00d2da" text90 link label="Signalez un Bug 🛟" onPress={() => navigation.navigate("BugSignal", { qcmId: qcmOnScreen.id })} />
+                                <Button paddingB-20 color="#00d2da" text90 link label="Signalez un Bug 🛟" onPress={() => navigation.navigate("BugSignal", { qcmId: qcmOnScreen.id })} />
                             </View>
                         </View>
 
@@ -250,6 +261,18 @@ export default function QcmScreen({ route, navigation }: any) {
             </View>}
 
         </ScrollView>
-    </>
     )
+
 }
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingTop: 20,
+    },
+    scrollView: {
+        width: '100%',
+        margin: 10,
+    }
+})
