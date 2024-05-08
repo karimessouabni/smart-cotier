@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground } from 'react-native';
 import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -196,50 +196,60 @@ export default function LearningCard({ route, navigation }: any) {
 
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <GradientText text={lesson.name} />
-            <Markdown
-                markdownit={
-                    MarkdownIt({ typographer: true })
-                }
-                style={{
-                    body: { color: colors.text, fontSize: 14 + fontSize, paddingHorizontal: 15 },
-                    heading3: { color: colors.secondary, fontFamily: 'centraleSansB', paddingTop: 20, paddingBottom: 5 },
-                    code_block: { color: colors.text, fontSize: 14 + fontSize, fontFamily: 'centraleSansB' }
-                }}>
-                {`${formatStr()}`}
+        <View style={styles.container}>
 
-            </Markdown>
+            {/* <ImageBackground source={require('../assets/adaptive-icon.png')} style={styles.backgroundImage}> */}
+            <Image
+                source={require('../assets/adaptive-icon.png')}
+                style={styles.fixedImage}
+            />
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                <GradientText text={lesson.name} />
+                <Markdown
+                    markdownit={
+                        MarkdownIt({ typographer: true })
+                    }
+                    style={{
+                        body: { color: colors.text, fontSize: 14 + fontSize, paddingHorizontal: 15 },
+                        heading3: { color: colors.secondary, fontFamily: 'centraleSansB', paddingTop: 20, paddingBottom: 5 },
+                        code_block: { color: colors.text, fontSize: 14 + fontSize, fontFamily: 'centraleSansB' }
+                    }}>
+                    {`${formatStr()}`}
 
-
-            <Carousel
-                key={0}
-                ref={carousel}
-                pageWidth={getWidth()}
-                itemSpacings={Spacings.s3}
-                containerStyle={{ paddingTop: 20, height: 410, width: 420 }}
-                pageControlPosition={Carousel.pageControlPositions.UNDER}>
-                {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
-                    <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
-                        <Image
-                            style={{ position: 'absolute', width: '100%', height: '100%' }}
-                            source={{
-                                uri: uri
-                            }}
-                        />
-                        {/* <Text text80 color={Colors.green1} style={{ position: 'absolute', textAlign: 'left' }} padding-35>{index}/{3}</Text> */}
-
-                    </Page>
-                ))}
-            </Carousel>
+                </Markdown>
 
 
+                <Carousel
+                    key={0}
+                    ref={carousel}
+                    pageWidth={getWidth()}
+                    itemSpacings={Spacings.s3}
+                    containerStyle={{ paddingTop: 20, height: 420, width: 420 }}
+                    pageControlPosition={Carousel.pageControlPositions.UNDER}>
+                    {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
+                        <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
+                            <Image
+                                style={{ position: 'absolute', width: '100%', height: '100%' }}
+                                source={{
+                                    uri: uri
+                                }}
+                            />
+                            {/* <Text text80 color={Colors.green1} style={{ position: 'absolute', textAlign: 'left' }} padding-35>{index}/{3}</Text> */}
+
+                        </Page>
+                    ))}
+                </Carousel>
 
 
 
 
 
-        </ScrollView >
+
+
+            </ScrollView >
+
+            {/* </ImageBackground> */}
+        </View>
     );
 
 }
@@ -254,6 +264,27 @@ const Page = ({ children, style, ...others }) => {
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1, // Use flex to expand container to full screen
+        backgroundColor: '#fff', // Background color of the container
+    },
+    scrollView: {
+        flex: 1, // Make ScrollView flexible
+        backgroundColor: 'transparent', // Ensure background is transparent
+    },
+    text: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 20,
+    },
+    fixedImage: {
+        position: 'absolute', // Absolute positioning to place it over the content
+        right: 0, // Align to the right
+        bottom: 0, // Align to the bottom
+        width: 100, // Set width of the image
+        height: 100, // Set height of the image
+        opacity: 0.2
+    },
     picker: {
         marginHorizontal: 20
     },

@@ -9,14 +9,10 @@ class QuizService {
 
     fetchQuizOfChapter = async (chapterId: string) => {
         const q = query(this.getAllLessonQuizes(chapterId));
-
         const querySnapshot = await getDocs(q)
         const quizList: Quiz[] = querySnapshot.docs.map((fbDoc) => {
-
             return { id: fbDoc.id, order: "0", ...fbDoc.data() } as Quiz
         })
-
-        console.log(quizList)
         return quizList.length > 0 ? quizList[0] : null
     }
 

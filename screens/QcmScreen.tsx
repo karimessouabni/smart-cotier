@@ -73,15 +73,6 @@ export default function QcmScreen({ route, navigation }: any) {
     }, [animatedScreen])
 
 
-    const goToBackQcm = () => {
-        if (qcmList[indexQcmOnScreen - 1]) {
-            setQcmOnScreen(qcmList[indexQcmOnScreen - 1])
-            setIndexQcmOnScreen(prev => --prev)
-        }
-        setAnimatedScreen(false)
-    }
-
-
     const checkUncheckAnswer = (id: string) => {
         if (!correctAnswer && !errorMessage) {
             setQcmUserAnswerIds(perv => {
