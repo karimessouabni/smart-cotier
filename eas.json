@@ -1,94 +1,97 @@
 {
-    "cli": {
-        "version": ">= 3.9.0"
+  "cli": {
+    "version": ">= 3.9.0"
+  },
+  "build": {
+    "fast": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium",
+        "simulator": true
+      },
+      "channel": "fast"
     },
-    "build": {
-        "fast": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "ios": {
-                "resourceClass": "m-medium",
-                "simulator": true
-            }
-        },
-        "development": {
-            "developmentClient": true,
-            "distribution": "internal",
-            "env": {
-                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
-                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
-                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
-                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
-                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
-                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
-                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
-            }
-        },
-        "development-simulator": {
-            "channel": "development-simulator",
-            "extends": "fast",
-            "env": {
-                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
-                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
-                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
-                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
-                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
-                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
-                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
-            }
-        },
-        "production-simulator": {
-            "channel": "production-simulator",
-            "extends": "fast",
-            "env": {
-                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
-                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
-                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
-                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
-                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
-                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
-                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
-            }
-        },
-        "preview": {
-            "channel": "preview",
-            "distribution": "internal",
-            "env": {
-                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
-                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
-                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
-                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
-                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
-                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
-                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
-            }
-        },
-        "production": {
-            "android": {
-                "buildType": "app-bundle"
-            },
-            "ios": {},
-            "env": {
-                "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
-                "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
-                "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
-                "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
-                "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
-                "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
-                "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
-            }
-        }
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "env": {
+        "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+        "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+        "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+        "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+        "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+        "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+        "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+      },
+      "channel": "development"
     },
-    "submit": {
-        "production": {
-            "android": {
-                "track": "internal"
-            },
-            "ios": {
-                "appleId": "karim@ekitlab.com",
-                "ascAppId": "6475571163",
-                "appleTeamId": "AT2J23SM6A"
-            }
-        }
+    "development-simulator": {
+      "channel": "development-simulator",
+      "extends": "fast",
+      "env": {
+        "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+        "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+        "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+        "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+        "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+        "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+        "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+      }
+    },
+    "production-simulator": {
+      "channel": "production-simulator",
+      "extends": "fast",
+      "env": {
+        "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+        "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+        "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+        "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+        "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+        "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+        "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+      }
+    },
+    "preview": {
+      "channel": "preview",
+      "distribution": "internal",
+      "env": {
+        "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+        "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+        "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+        "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+        "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+        "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+        "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+      }
+    },
+    "production": {
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "ios": {},
+      "env": {
+        "DEV_FIREBASE_API_KEY": "AIzaSyB_lRIJlzmCbFYXfX1DwbtDAzXhme_EKQE",
+        "DEV_FIREBASE_AUTH_DOMAIN": "smart-cotier.firebaseapp.com",
+        "DEV_FIREBASE_PROJECT_ID": "smart-cotier",
+        "DEV_FIREBASE_STORAGE_BUCKET": "smart-cotier.appspot.com",
+        "DEV_FIREBASE_MESSAGING_SENDER_ID": "748643992188",
+        "DEV_FIREBASE_APP_ID": "1:748643992188:web:2a2bde2d0b7e518b5ebff9",
+        "DEV_FIREBASE_MEASUREMENT_ID": "G-QS2SZ9J6Z3"
+      },
+      "channel": "production"
     }
+  },
+  "submit": {
+    "production": {
+      "android": {
+        "track": "internal"
+      },
+      "ios": {
+        "appleId": "karim@ekitlab.com",
+        "ascAppId": "6475571163",
+        "appleTeamId": "AT2J23SM6A"
+      }
+    }
+  }
 }

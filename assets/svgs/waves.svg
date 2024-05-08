@@ -1,7 +1,7 @@
 <svg viewBox="0 0 300 10">
-    <path d="M 0 100 C 0 100 0 90 300 100 L 300 0 L 0 0" fill="#00d2da" opacity="0.5"></path>
-    <path d="M 0 20 C 150 150 300 50 400 100 L 300 0 L 0 0" fill="#00a8ae"></path>
-    <path d="M 0 100 C 150 0 330 100 400 50 L 300 0 L 0 0" fill="#99edf0" opacity="0.8"></path>
+    <path d="M 0 100 C 0 100 0 90 300 100 L 300 0 L 0 0" fill="#3FF3FF" opacity="0.5"></path>
+    <path d="M 0 20 C 150 150 300 50 400 100 L 300 0 L 0 0" fill="#3FF3FF"></path>
+    <path d="M 0 100 C 150 0 330 100 400 50 L 300 0 L 0 0" fill="#cbfbfe" opacity="0.8"></path>
 
     <circle cx="55" cy="70" r="2" fill="#fff" />
     <circle cx="200" cy="75" r="2" fill="#fff" />

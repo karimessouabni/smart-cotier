@@ -1,11 +1,12 @@
 import _ from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground } from 'react-native';
-import { Constants, Spacings, View, Text, Carousel, Image, Colors } from 'react-native-ui-lib';
+import { StyleSheet, ScrollView, TouchableOpacity, Alert, ImageBackground, Dimensions } from 'react-native';
+import { Constants, Spacings, View, Text, Image } from 'react-native-ui-lib';
 import Markdown, { MarkdownIt } from 'react-native-markdown-display';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import UserService from '../services/UserService';
 import { Lesson, Progress } from 'types';
+import * as Haptics from 'expo-haptics';
 
 import { useTheme } from '@react-navigation/native'
 import { Button, Center, HStack } from 'native-base';
@@ -13,6 +14,7 @@ import MusicPlayer from './MusicPlayer';
 import TrackPlayer, { Capability } from 'react-native-track-player';
 import GradientText from '../providers/GradientText';
 import { LinearGradient } from 'expo-linear-gradient';
+import Carousel from 'react-native-reanimated-carousel';
 
 
 export type LearningCardProps = {
@@ -27,6 +29,7 @@ export default function LearningCard({ route, navigation }: any) {
     const carousel = useRef(null);
     const { colors } = useTheme()
     const [fontSize, setFontSize] = useState(0);
+    const { width, height } = Dimensions.get('window');
 
 
     const setupPlayer = async () => {
@@ -91,7 +94,7 @@ export default function LearningCard({ route, navigation }: any) {
                             <Button.Group isAttached size="xs" pr={10} >
 
 
-                                <Button pr={5} onPress={() => setFontSize(prev => prev - 1)} backgroundColor={'transparent'} >A-</Button>
+                                <Button pr={5} onPress={() => { setFontSize(prev => prev - 1) }} backgroundColor={'transparent'} >A-</Button>
                                 <Button onPress={() => setFontSize(prev => prev + 1)} backgroundColor={'transparent'} >A+</Button>
 
 
@@ -219,32 +222,35 @@ export default function LearningCard({ route, navigation }: any) {
                 </Markdown>
 
 
-                <Carousel
-                    key={0}
-                    ref={carousel}
-                    pageWidth={getWidth()}
-                    itemSpacings={Spacings.s3}
-                    containerStyle={{ paddingTop: 20, height: 420, width: 420 }}
-                    pageControlPosition={Carousel.pageControlPositions.UNDER}>
-                    {lesson.imgs && lesson.imgs.length > 0 && lesson.imgs.map((uri, index) => (
-                        <Page key={index} style={{ flex: 1, justifyContent: 'top', alignItems: 'top' }}>
+
+                {lesson.imgs && lesson.imgs.length > 0 && <Carousel
+                    loop
+                    width={width}
+                    height={width}
+                    data={lesson.imgs}
+                    mode="parallax"
+                    modeConfig={{
+                        parallaxScrollingScale: 0.9,
+                        parallaxScrollingOffset: 50,
+                    }}
+                    onSnapToItem={(index) => console.log('current index:', index)}
+                    renderItem={(data) => (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                            }}
+                        >
                             <Image
                                 style={{ position: 'absolute', width: '100%', height: '100%' }}
                                 source={{
-                                    uri: uri
+                                    uri: data.item
                                 }}
                             />
-                            {/* <Text text80 color={Colors.green1} style={{ position: 'absolute', textAlign: 'left' }} padding-35>{index}/{3}</Text> */}
 
-                        </Page>
-                    ))}
-                </Carousel>
-
-
-
-
-
-
+                        </View>
+                    )}
+                />}
 
             </ScrollView >
 
