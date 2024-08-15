@@ -56,7 +56,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                     </ListItem.Part>
                     <ListItem.Part middle column containerStyle={[{ paddingRight: 17 }]}>
                         <ListItem.Part containerStyle={{ marginBottom: 3 }}>
-                            <Text color={colors.text} text70 style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
+                            <Text color={colors.text} text70L style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
                                 {chapter.name}
                             </Text>
                             <View style={{ marginTop: 2 }}>
@@ -66,7 +66,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                         <ListItem.Part>
                             <Text
                                 style={{ flex: 1, marginRight: 10, marginBottom: 4 }}
-                                text90
+                                text60S
                                 color={colors.secondaryText}
                                 numberOfLines={1}
                             >{`${chapter.nbrLesson} séctions`}</Text>
