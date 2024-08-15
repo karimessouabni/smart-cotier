@@ -69,7 +69,7 @@ export default function HomeScreen({ navigation: { navigate } }: any) {
                                 text60S
                                 color={colors.secondaryText}
                                 numberOfLines={1}
-                            >{`${chapter.nbrLesson} séctions`}</Text>
+                            >{`${chapter.nbrLesson} sections`}</Text>
                         </ListItem.Part>
                         <View >
                             <AnimatedScanner

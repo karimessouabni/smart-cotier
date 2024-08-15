@@ -1,0 +1,418 @@
+[
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q36a1"
+      },
+      "text": {
+        "stringValue": "Une pleine mer et une basse mer."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q36a2"
+      },
+      "text": {
+        "stringValue": "Deux pleines mers et deux basses mers."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q36a3"
+      },
+      "text": {
+        "stringValue": "Trois pleines mers et trois basses mers."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q36a4"
+      },
+      "text": {
+        "stringValue": "Quatre pleines mers et quatre basses mers."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q37a1"
+      },
+      "text": {
+        "stringValue": "Nouvelle Lune et Pleine Lune."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q37a2"
+      },
+      "text": {
+        "stringValue": "Premier et dernier quartier de la Lune."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q37a3"
+      },
+      "text": {
+        "stringValue": "Chaque équinoxe."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q37a4"
+      },
+      "text": {
+        "stringValue": "Chaque solstice."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q38a1"
+      },
+      "text": {
+        "stringValue": "Petites marées avec faible variation de niveau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q38a2"
+      },
+      "text": {
+        "stringValue": "Marées intermédiaires."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q38a3"
+      },
+      "text": {
+        "stringValue": "Grandes marées avec forte variation de niveau."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q38a4"
+      },
+      "text": {
+        "stringValue": "Absence de marées."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q39a1"
+      },
+      "text": {
+        "stringValue": "Flamme bleue."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q39a2"
+      },
+      "text": {
+        "stringValue": "Cône noir avec la pointe vers le haut."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q39a3"
+      },
+      "text": {
+        "stringValue": "Pavillon blanc et croix de Saint-André noire."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q39a4"
+      },
+      "text": {
+        "stringValue": "Deux feux verts horizontaux."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q40a1"
+      },
+      "text": {
+        "stringValue": "20 centimètres d'eau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q40a2"
+      },
+      "text": {
+        "stringValue": "1 mètre d'eau."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q40a3"
+      },
+      "text": {
+        "stringValue": "5 mètres d'eau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q40a4"
+      },
+      "text": {
+        "stringValue": "10 mètres d'eau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q41a1"
+      },
+      "text": {
+        "stringValue": "Le temps entre deux marées hautes."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q41a2"
+      },
+      "text": {
+        "stringValue": "L'écart de hauteur entre pleine mer et basse mer."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q41a3"
+      },
+      "text": {
+        "stringValue": "La durée d'une marée montante."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q41a4"
+      },
+      "text": {
+        "stringValue": "La vitesse de montée des eaux."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q42a1"
+      },
+      "text": {
+        "stringValue": "La température de l'eau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q42a2"
+      },
+      "text": {
+        "stringValue": "La salinité de l'eau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q42a3"
+      },
+      "text": {
+        "stringValue": "La mesure verticale du fond marin au niveau zéro."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q42a4"
+      },
+      "text": {
+        "stringValue": "La vitesse du courant marin."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q43a1"
+      },
+      "text": {
+        "stringValue": "Pour prévenir l'échouage à basse mer."
+      },
+      "valid": {
+        "booleanValue": true
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q43a2"
+      },
+      "text": {
+        "stringValue": "Pour calculer la vitesse du bateau."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q43a3"
+      },
+      "text": {
+        "stringValue": "Pour déterminer la direction du vent."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  },
+  {
+    "fields": {
+      "id": {
+        "stringValue": "q43a4"
+      },
+      "text": {
+        "stringValue": "Pour ajuster les voiles."
+      },
+      "valid": {
+        "booleanValue": false
+      }
+    }
+  }
+]

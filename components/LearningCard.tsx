@@ -224,7 +224,6 @@ export default function LearningCard({ route, navigation }: any) {
 
 
                 {lesson.imgs && lesson.imgs.length > 0 && <Carousel
-                    loop
                     width={width}
                     height={width}
                     data={lesson.imgs}

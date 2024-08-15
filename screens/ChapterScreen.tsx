@@ -22,7 +22,7 @@ export type LessonScreenProps = {
 type LessonStories = {
     id: number;
     avatar_image: string;
-    user_name: string;
+    // user_name: string;
     stories: Story[];
 };
 
@@ -85,7 +85,7 @@ export default function ChapterScreen({ route, navigation }: any) {
         let stroyId = 1;
         const lessonImagesList: LessonStories[] = fetchedLessons.map(lesson => ({
             id: stroyId++,
-            user_name: lesson.name,
+            // user_name: lesson.name,
             avatar_image: lesson.imgs[0],
             stories: lesson.imgs.map(img => ({
                 story_id: imageId++, // Generate unique ID for each image
@@ -134,7 +134,9 @@ export default function ChapterScreen({ route, navigation }: any) {
                     onPress={() => navigation.navigate('LearningCard', { chapterId: chapterId, lesson: lesson, lessonProgress: getLessonProgress(lesson.id) })} >
 
                     <ListItem.Part left >
-                        <RadioButton containerStyle={{ margin: 10 }} selected={checkLessonProgress(lesson.id)} color={colors.primary} size={18} />
+                        {/* <RadioButton containerStyle={{ margin: 10 }} selected={checkLessonProgress(lesson.id)} color={colors.primary} size={18} /> */}
+                        {stories.length > 0 && <ExpoInstaStory data={[stories[id]]} duration={5} unPressedBorderColor={colors.secondary} storyImageStyle={{ objectFit: 'scale-down' }} style={{ transform: [{ scale: 0.9 }] }} />}
+
                     </ListItem.Part>
                     <ListItem.Part middle column containerStyle={[styles.border, { paddingRight: 17 }]}>
                         <ListItem.Part containerStyle={{ marginBottom: 3 }}>
@@ -167,9 +169,9 @@ export default function ChapterScreen({ route, navigation }: any) {
 
     return (
         <>
-            {stories.length > 0 &&
-                <ExpoInstaStory data={stories} duration={5} unPressedBorderColor={colors.secondary} storyImageStyle={{ objectFit: 'scale-down' }} />
-            }
+            {/* {stories.length > 0 &&
+                <ExpoInstaStory data={[stories[0]]} duration={5} unPressedBorderColor={colors.secondary} storyImageStyle={{ objectFit: 'scale-down' }} />
+            } */}
             <FlatList
                 data={lessons}
                 renderItem={({ item, index }) => renderRow(item, index)}
@@ -179,14 +181,15 @@ export default function ChapterScreen({ route, navigation }: any) {
             <LinearGradient
                 colors={["#00A0F4", "#00D6DF"]}
                 start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}>
-                <Button textAlign={'center'} alignContent={'center'} p={2} pb={7} pt={5}
+                end={{ x: 1, y: 0 }}
+                style={[{ marginBottom: 30, marginTop: 15, paddingHorizontal: 30, marginHorizontal: 30, borderRadius: 5 }]}>
+                <Button textAlign={'center'} alignContent={'center'} pb={3} pt={3}
                     onPress={() => navigation.navigate('QcmScreen', { quiz: quiz, chapterId: chapterId })} variant="solid" backgroundColor='transparent' borderRadius={0} endIcon={<Icon as={Ionicons} name="boat" size="lg" />}>
 
 
                     <Text color={"white"}
                         text60M style={{ flex: 1, marginRight: 10 }} numberOfLines={1}>
-                        Lancer un test pour ce chapitre
+                        Lancer un test
                     </Text>
 
                 </Button>
