@@ -43,6 +43,7 @@ export default function QuizScreen({ route, navigation }: any) {
     useEffect(() => {
         const fetchQuizList = async () => {
             const fetchedQuizzes = await QuizService.fetchAllQuiz()
+            console.debug(fetchedQuizzes[0].id)
             const quizMatrix: Quiz[][] = []; // Initialiser la matrice de quizz
 
             const promises = fetchedQuizzes.map(async (q) => {

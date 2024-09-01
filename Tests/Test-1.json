@@ -1,0 +1,667 @@
+[
+    {
+        "id": "q1",
+        "question": "Vous voyez droit devant ces 2 balises. Qu'en déduisez-vous ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q1a1",
+                "text": "Vous faites route vers le large",
+                "valid": false
+            },
+            {
+                "id": "q1a2",
+                "text": "Vous faites route vers le port",
+                "valid": true
+            },
+            {
+                "id": "q1a3",
+                "text": "Vous traversez un chenal",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q2",
+        "question": "Comment épelez-vous le nom du navire « SHREK » ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q2a1",
+                "text": "Sarah - Hôtel - Roméo - Écho - Kaki",
+                "valid": false
+            },
+            {
+                "id": "q2a2",
+                "text": "Samba - Hugo - Roméo - Écho - Kilo",
+                "valid": false
+            },
+            {
+                "id": "q2a3",
+                "text": "Sierra - Hôtel - Roméo - Écho - Kilo",
+                "valid": true
+            },
+            {
+                "id": "q2a4",
+                "text": "Salsa - Hugo - Roméo - Echo - Kilo",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q3",
+        "question": "En mer, vous voyez ces feux. De quel type de navire s'agit-il ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q3a1",
+                "text": "Navire échoué",
+                "valid": false
+            },
+            {
+                "id": "q3a2",
+                "text": "Bateau-pilote au mouillage.",
+                "valid": false
+            },
+            {
+                "id": "q3a3",
+                "text": "Remorqueur avec remorque de plus de 200 mètres",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q4",
+        "question": "Dans un chenal étroit, un navire vous rattrape et émet le signal phonique suivant (deux sons prolongés suivis d'un son bref). Cela signifie :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q4a1",
+                "text": "A - Je compte vous dépasser sur votre bâbord",
+                "valid": false
+            },
+            {
+                "id": "q4a2",
+                "text": "B - Je compte vous dépasser sur votre tribord",
+                "valid": true
+            },
+            {
+                "id": "q4a3",
+                "text": "C - Je ne compte pas vous dépasser",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q5",
+        "question": "Vous voyez devant vous un bateau faisant une route directement opposée à la vôtre, comment manœuvrez-vous ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q5a1",
+                "text": "A - Vous venez à droite",
+                "valid": true
+            },
+            {
+                "id": "q5a2",
+                "text": "B - Vous venez à gauche",
+                "valid": false
+            },
+            {
+                "id": "q5a3",
+                "text": "C - Vous venez indifféremment à droite ou à gauche",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q6",
+        "question": "Vous faites route au Sud :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q6a1",
+                "text": "A - Vous laissez la bouée sur votre droite",
+                "valid": true
+            },
+            {
+                "id": "q6a2",
+                "text": "B - Vous laissez la bouée sur votre gauche",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q7",
+        "question": "Auprès de quelle autorité le chef de bord doit-il déposer un rapport de mer en cas d'accident corporel ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q7a1",
+                "text": "A - Les Douanes",
+                "valid": false
+            },
+            {
+                "id": "q7a2",
+                "text": "B - La capitainerie du port",
+                "valid": false
+            },
+            {
+                "id": "q7a3",
+                "text": "C - Les Affaires Maritimes",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q8",
+        "question": "Un message d'urgence est transmis si :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q8a1",
+                "text": "A - Vous apercevez des résidus de pétrole",
+                "valid": false
+            },
+            {
+                "id": "q8a2",
+                "text": "B - Vous rencontrez un container à la dérive",
+                "valid": false
+            },
+            {
+                "id": "q8a3",
+                "text": "C - Il y a un malade à bord",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q9",
+        "question": "Qu'est-ce que la SNSM ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q9a1",
+                "text": "A - Une association de bénévoles qui assurent le sauvetage en mer",
+                "valid": true
+            },
+            {
+                "id": "q9a2",
+                "text": "B - Un organisme d'État qui surveille la pêche en mer et la lutte contre la pollution",
+                "valid": false
+            },
+            {
+                "id": "q9a3",
+                "text": "C - Une société commerciale de remorquage et de dépannage à la demande des plaisanciers",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q10",
+        "question": "Un appel de détresse ou d'urgence est entendu par le CROSS ainsi que tous les navires proches sur zone s'il est adressé :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q10a1",
+                "text": "A - Par téléphone portable",
+                "valid": false
+            },
+            {
+                "id": "q10a2",
+                "text": "B - Par VHF",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q11",
+        "question": "En météo marine, lequel de ces termes est synonyme de mauvais temps ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q11a1",
+                "text": "A - Marais barométrique",
+                "valid": false
+            },
+            {
+                "id": "q11a2",
+                "text": "B - Dépression",
+                "valid": true
+            },
+            {
+                "id": "q11a3",
+                "text": "C - Anticyclone",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q12",
+        "question": "Que donne le MMSI ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q12a1",
+                "text": "A - Le numéro d'immatriculation du navire",
+                "valid": false
+            },
+            {
+                "id": "q12a2",
+                "text": "B - La nationalité et l'identité du navire",
+                "valid": true
+            },
+            {
+                "id": "q12a3",
+                "text": "C - Le numéro de série de la VHF ASN",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q13",
+        "question": "Le système de balisage latéral de la région B s'applique :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q13a1",
+                "text": "A - À l'île de la Réunion",
+                "valid": false
+            },
+            {
+                "id": "q13a2",
+                "text": "B - En Corse",
+                "valid": false
+            },
+            {
+                "id": "q13a3",
+                "text": "C - Aux Antilles",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q14",
+        "question": "Le marnage est la différence de niveau entre une pleine mer et une basse mer consécutives :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q14a1",
+                "text": "A - VRAI",
+                "valid": true
+            },
+            {
+                "id": "q14a2",
+                "text": "B - FAUX",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q15",
+        "question": "Le chef de bord est responsable du nombre de personnes embarquées à bord de son navire :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q15a1",
+                "text": "A - VRAI",
+                "valid": true
+            },
+            {
+                "id": "q15a2",
+                "text": "B - FAUX",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q16",
+        "question": "Sur votre VHF ASN, vous sélectionnez 'ADRIFT' pour signaler :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q16a1",
+                "text": "A - Que vous êtes à la dérive",
+                "valid": true
+            },
+            {
+                "id": "q16a2",
+                "text": "B - Une voie d'eau à bord",
+                "valid": false
+            },
+            {
+                "id": "q16a3",
+                "text": "C - Que vous quittez le navire",
+                "valid": false
+            },
+            {
+                "id": "q16a4",
+                "text": "D - Que le navire coule",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q17",
+        "question": "Le permis de conduire les bateaux de plaisance à moteur (option côtière) permet de naviguer :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q17a1",
+                "text": "A - Jusqu'à 2 milles maximum d'un abri",
+                "valid": false
+            },
+            {
+                "id": "q17a2",
+                "text": "B - Jusqu'à 6 milles maximum d'un abri",
+                "valid": true
+            },
+            {
+                "id": "q17a3",
+                "text": "C - Jusqu'à 9 milles maximum d'un abri",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q18",
+        "question": "En navigation dans un chenal étroit, lequel de ces 3 navires est privilégié par rapport aux autres ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q18a1",
+                "text": "A - Un bateau à voile",
+                "valid": false
+            },
+            {
+                "id": "q18a2",
+                "text": "B - Un navire de plus de 20 m à propulsion mécanique",
+                "valid": true
+            },
+            {
+                "id": "q18a3",
+                "text": "C - Un navire montrant 2 cônes noirs opposés par la pointe",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q19",
+        "question": "Les régimes des vents de l'océan Atlantique et du bassin Méditerranéen sont différents :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q19a1",
+                "text": "A - FAUX",
+                "valid": false
+            },
+            {
+                "id": "q19a2",
+                "text": "B - VRAI",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q20",
+        "question": "En mer, vous apercevez cette balise dont la couleur est incertaine :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q20a1",
+                "text": "A - Vous devez obligatoirement identifier sa couleur pour connaître la route à suivre",
+                "valid": false
+            },
+            {
+                "id": "q20a2",
+                "text": "B - Vous passez indifféremment à droite ou à gauche sans tenir compte de son voyant",
+                "valid": false
+            },
+            {
+                "id": "q20a3",
+                "text": "C - Vous pouvez vous fier à son voyant pour connaître la route à suivre",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q21",
+        "question": "Vous faites route au 80, vous apercevez un feu blanc à 6 scintillements suivi d'un éclat long toutes les 15 secondes :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q21a1",
+                "text": "A - Vous laissez le feu impérativement à droite",
+                "valid": false
+            },
+            {
+                "id": "q21a2",
+                "text": "B - Vous laissez le feu impérativement à gauche",
+                "valid": true
+            },
+            {
+                "id": "q21a3",
+                "text": "C - Vous laissez le feu indifféremment à droite ou à gauche",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q22",
+        "question": "Pour contacter un navire ami en radiotéléphonie, je dois :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q22a1",
+                "text": "A - Sélectionner le canal 16, écouter et appeler si le canal est libre",
+                "valid": true
+            },
+            {
+                "id": "q22a2",
+                "text": "B - Appeler sur un canal navire-navire",
+                "valid": false
+            },
+            {
+                "id": "q22a3",
+                "text": "C - Sélectionner le canal 16 et appeler immédiatement le navire",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q23",
+        "question": "À quoi correspond le zéro hydrographique sur une carte marine ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q23a1",
+                "text": "A - Au niveau de la mer aux plus grandes basses mer",
+                "valid": true
+            },
+            {
+                "id": "q23a2",
+                "text": "B - Au niveau de la mer aux plus grandes pleines mer",
+                "valid": false
+            },
+            {
+                "id": "q23a3",
+                "text": "C - Au niveau moyen de la mer",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q24",
+        "question": "Sur un navire de plaisance, l'outillage pour le petit dépannage est-il obligatoire ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q24a1",
+                "text": "A - Oui, quelle que soit la distance d'éloignement d'un abri",
+                "valid": false
+            },
+            {
+                "id": "q24a2",
+                "text": "B - Oui, uniquement pour une navigation supérieure à 6 milles d'un abri",
+                "valid": false
+            },
+            {
+                "id": "q24a3",
+                "text": "C - Non, mais conseillé",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q25",
+        "question": "Quels sont la couleur et le secteur d'angle de vision du feu de poupe d'un navire ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q25a1",
+                "text": "A - Blanche et 112,5°",
+                "valid": false
+            },
+            {
+                "id": "q25a2",
+                "text": "B - Rouge et 135°",
+                "valid": false
+            },
+            {
+                "id": "q25a3",
+                "text": "C - Blanche et 135°",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q26",
+        "question": "Ce pavillon signifie :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q26a1",
+                "text": "A - Présence de filets de pêche",
+                "valid": false
+            },
+            {
+                "id": "q26a2",
+                "text": "B - Présence de plongeurs sous-marins",
+                "valid": true
+            },
+            {
+                "id": "q26a3",
+                "text": "C - Limite d'une zone ostréicole",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q27",
+        "question": "Définition du feu Isophase :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q27a1",
+                "text": "A - Temps de lumière plus court que le temps d'obscurité",
+                "valid": false
+            },
+            {
+                "id": "q27a2",
+                "text": "B - Temps de lumière égal au temps d'obscurité",
+                "valid": true
+            },
+            {
+                "id": "q27a3",
+                "text": "C - Temps de lumière plus long que le temps d'obscurité",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q28",
+        "question": "L'excès de vitesse dans la bande des 300 mètres du bord de l'eau est un motif de retrait du permis mer :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q28a1",
+                "text": "A - OUI",
+                "valid": true
+            },
+            {
+                "id": "q28a2",
+                "text": "B - NON",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q29",
+        "question": "Le navire équipé d'un réservoir pour recevoir les eaux noires doit :",
+        "img": "",
+        "answers": [
+            {
+                "id": "q29a1",
+                "text": "A - Vidanger le réservoir avant d'entrer au port",
+                "valid": false
+            },
+            {
+                "id": "q29a2",
+                "text": "B - Utiliser à terre les bornes de vidange",
+                "valid": true
+            }
+        ],
+        "explain": ""
+    },
+    {
+        "id": "q30",
+        "question": "Un véhicule nautique à moteur peut-il naviguer de nuit ?",
+        "img": "",
+        "answers": [
+            {
+                "id": "q30a1",
+                "text": "A - OUI",
+                "valid": false
+            },
+            {
+                "id": "q30a2",
+                "text": "B - NON",
+                "valid": true
+            },
+            {
+                "id": "q30a3",
+                "text": "C - OUI, s'il est équipé de feux de nuit",
+                "valid": false
+            }
+        ],
+        "explain": ""
+    }
+]

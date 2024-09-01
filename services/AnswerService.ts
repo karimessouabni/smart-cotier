@@ -6,6 +6,7 @@ import { Answer } from 'types';
 class AnswerService {
 
     fetchAllAnswers = async (quizId: string, qcmId: string) => {
+        console.log("fetchAllAnswers => " + qcmId)
         const q = query(collection(db, `quiz/${quizId}/qcms/${qcmId}/answers`));
         const querySnapshot = await getDocs(q)
         return querySnapshot.docs.map((fbDoc) => fbDoc.data() as Answer)

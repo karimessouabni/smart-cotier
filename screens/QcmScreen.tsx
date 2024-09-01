@@ -59,7 +59,9 @@ export default function QcmScreen({ route, navigation }: any) {
         const fetcQcmList = async () => {
             const fetchedQcmList = chapterId ? await QcmService.fetchAllCahpterQcm(chapterId) : await QcmService.fetchAllQcm(quiz.id)
             setQcmList(fetchedQcmList)
+            console.log("fetchedQcmList => ", fetchedQcmList)
             setQcmOnScreen(fetchedQcmList[0])
+            console.debug(fetchedQcmList[0].answers)
             setQcmValidAnswerIds(fetchedQcmList[0]?.answers.filter(answer => answer.valid == true).map(answer => answer.id))
         }
         fetcQcmList();
@@ -177,6 +179,7 @@ export default function QcmScreen({ route, navigation }: any) {
                         />}
 
                         <View flex paddingH-20 paddingT-20 >
+
                             {qcmOnScreen.answers.map((answer, index) => {
                                 const answerIsClicked = qcmUserAnswerIds.includes(answer.id);
                                 const isCorrectAnswer = qcmUserAnswerIds.includes(answer.id) && correctAnswer;
