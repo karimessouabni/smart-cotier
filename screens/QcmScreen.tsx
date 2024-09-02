@@ -59,9 +59,7 @@ export default function QcmScreen({ route, navigation }: any) {
         const fetcQcmList = async () => {
             const fetchedQcmList = chapterId ? await QcmService.fetchAllCahpterQcm(chapterId) : await QcmService.fetchAllQcm(quiz.id)
             setQcmList(fetchedQcmList)
-            console.log("fetchedQcmList => ", fetchedQcmList)
             setQcmOnScreen(fetchedQcmList[0])
-            console.debug(fetchedQcmList[0].answers)
             setQcmValidAnswerIds(fetchedQcmList[0]?.answers.filter(answer => answer.valid == true).map(answer => answer.id))
         }
         fetcQcmList();

@@ -6,7 +6,6 @@ import { Qcm, Answer } from 'types';
 class QcmService {
 
     fetchAllQcm = async (quizId: string) => {
-        console.debug("fetchAllQcm => " + quizId)
         const q = query(collection(db, `quiz/${quizId}/qcms`));
 
         const querySnapshot = await getDocs(q)
@@ -23,7 +22,6 @@ class QcmService {
 
 
     fetchAllCahpterQcm = async (chapterId: string) => {
-        console.debug("fetchAllCahpterQcm", chapterId)
         const qcmPath = `chapters/${chapterId}/quiz/quiz1/qcms`;
         const q = query(collection(db, qcmPath));
 
